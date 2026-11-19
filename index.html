@@ -923,7 +923,7 @@ const after=$("#coda .coda-cooked"),label=$("#codaPhotoLabel"),fin=$("#sixFinale
 let tint=null,glow=null,spins=[],spinT0=0,spinA=-1;
 if(fin){fin.innerHTML=sixPlateSVG("sxC");tint=fin.querySelector(".sx-tint");glow=fin.querySelector(".sx-glow");spins=$$(".sx-spin",fin);}
 FX.coda=(p,el,act,now)=>{
-const t=ease(norm(p,.12,.37));after.style.opacity=t.toFixed(3);
+const t=ease(norm(p,.22,.38));after.style.opacity=t.toFixed(3);
 const cooked=t>.60;if(label.dataset.cooked!==(cooked?"1":"0")){label.dataset.cooked=cooked?"1":"0";label.textContent=cooked?"충분히 가열한 굴":"생굴";}
 label.style.opacity=(.82*(1-norm(p,.45,.56))).toFixed(3);
 if(!fin)return false;
