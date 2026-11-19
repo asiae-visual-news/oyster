@@ -10,8 +10,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="러시안 굴렛">
 <meta property="og:description" content="같은 굴을 나눠 먹어도 누구는 앓고 누구는 멀쩡하다. 겨울 생굴과 노로바이러스.">
-<!-- 배포 폴더명이 다르면 이 두 주소만 바꿔 주세요. 공유 썸네일은 절대 주소여야 뜹니다. -->
+<!-- 배포 폴더명이 다르면 이 주소들만 바꿔 주세요. 공유 썸네일은 절대 주소여야 뜹니다. -->
 <meta property="og:image" content="https://asiae-visual-news.github.io/oyster/00-cover.jpg">
+<meta property="og:image:alt" content="잘게 부순 얼음 위에 놓인 생굴 한 접시와 레몬">
 <meta property="og:url" content="https://asiae-visual-news.github.io/oyster/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -53,6 +54,10 @@ img,svg,canvas{display:block;max-width:100%}button{font-family:inherit}::selecti
 .scrim.heavy{background:linear-gradient(90deg,rgba(2,13,19,.58),rgba(2,13,19,.22) 56%,rgba(2,13,19,.12)),linear-gradient(0deg,rgba(2,12,18,.48),rgba(2,12,18,.08) 42%,rgba(2,12,18,.11))}
 .scrim.side{background:linear-gradient(90deg,rgba(4,12,18,.79),rgba(4,12,18,.33) 70%,rgba(4,12,18,.04))}
 .scrim.dim{background:#03080B;opacity:0;z-index:6}
+.xedge{position:absolute;z-index:9;pointer-events:none;opacity:0}
+.xedge.tide{left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(214,248,246,.85) 20%,rgba(255,255,255,.95) 50%,rgba(214,248,246,.85) 80%,transparent);box-shadow:0 0 18px 4px rgba(150,225,223,.45)}
+.xedge.ring{border-radius:50%;border:2px solid rgba(255,214,228,.7);box-shadow:0 0 24px 6px rgba(240,141,174,.28),inset 0 0 24px 6px rgba(240,141,174,.18);transform:translate(-50%,-50%)}
+.xedge.ring.heat{border-color:rgba(255,196,130,.8);box-shadow:0 0 28px 8px rgba(238,154,92,.35),inset 0 0 28px 8px rgba(238,154,92,.2)}
 .beat{position:absolute;pointer-events:none;will-change:opacity,transform;z-index:5}
 .js .beat{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .34s ease}
 .js .beat.past{transform:translateY(-8px)}
@@ -103,6 +108,8 @@ img,svg,canvas{display:block;max-width:100%}button{font-family:inherit}::selecti
 .cover-wrap{position:relative;z-index:3;padding:0 var(--gut);width:100%;max-width:960px}
 .title{font-family:var(--serif);font-weight:400;font-size:clamp(62px,9.8vw,132px);line-height:1.04;letter-spacing:-.035em;margin:0;color:#fff;opacity:0;animation:rise .9s .4s cubic-bezier(.16,1,.3,1) forwards;text-shadow:0 2px 30px rgba(3,8,11,.6)}
 .title b{font:inherit;color:#7CC3C2;letter-spacing:inherit;text-shadow:0 0 10px rgba(124,195,194,.42),0 0 27px rgba(124,195,194,.22)}
+.deck{margin:clamp(20px,3vh,30px) 0 0;max-width:30ch;font-size:clamp(16px,1.55vw,20px);line-height:1.75;font-weight:440;color:#e6eff0;text-wrap:pretty;text-shadow:0 1px 10px rgba(3,8,11,.8),0 0 24px rgba(3,8,11,.6);opacity:0;animation:rise .8s .8s ease-out forwards}
+.deck::before{content:"";display:block;width:28px;height:1px;margin-bottom:16px;background:#7CC3C2;box-shadow:0 0 8px rgba(124,195,194,.7)}
 .series{position:absolute;z-index:5;left:clamp(21px,3.5vw,53px);top:8.5%;bottom:8.5%;width:46px;pointer-events:none}
 .series::before{content:"";position:absolute;left:37px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(174,151,103,.24) 16%,rgba(174,151,103,.34) 53%,rgba(174,151,103,.24) 84%,transparent);opacity:0;transform:scaleY(.82);animation:o5LineRise 3.8s .35s ease-out both}
 .series span{position:absolute;top:50%;left:5px;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);font-size:clamp(10px,.91vw,12px);font-weight:550;letter-spacing:.36em;white-space:nowrap;color:rgba(203,178,128,.49);text-shadow:0 0 18px rgba(190,168,120,.12);opacity:0;filter:blur(2.5px);animation:o5MarkRise 3.4s 1s ease-out both}
@@ -302,6 +309,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
  .scrim.bottom{background:linear-gradient(to top,rgba(3,12,20,.90) 0%,rgba(3,12,20,.59) 30%,transparent 78%)}
  #cover .scrim.full{background:linear-gradient(90deg,rgba(3,12,18,.79),rgba(3,12,18,.32) 65%,rgba(3,12,18,.05)),linear-gradient(0deg,rgba(3,12,17,.23),transparent 60%)}
  #cover .cover-wrap{padding-left:max(40px,calc(env(safe-area-inset-left,0px) + 40px))}
+ .deck{font-size:16px;margin-top:16px}.deck::before{margin-bottom:12px}
  .series{left:max(4px,env(safe-area-inset-left,0px));width:29px;top:10%;bottom:9%}.series::before{left:30px}
  .series span{left:2px;font-size:9px;letter-spacing:.24em;color:rgba(203,178,128,.51)}
  .kicker{font-size:14px;margin-bottom:11px}
@@ -344,11 +352,10 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 @media(max-width:720px) and (max-height:720px){.note,.beat.lower .note{font-size:15px;line-height:1.52}.line{font-size:clamp(23px,5.9vw,28px)}#filter .readout{display:none}#why .binding-board{top:54px}#why .binding-card svg{height:32px}#why .w2{top:150px;width:min(70vw,300px)}}
 @media (max-width:720px) and (max-height:700px){.readout span{display:none}.fig{font-size:clamp(44px,13vw,68px)}.gauge{width:min(52vw,30vh)}}
 @media (pointer:coarse),(max-width:720px){.beat,.plate img{will-change:auto!important}}
-@media (prefers-reduced-motion:reduce){#potSvg .fl,#wsurf,#oySvg .flow-dash{animation:none}.plate img{transform:none!important}.title,.cue{animation:none;opacity:1}.series::before,.series span{animation:none;opacity:1;filter:none}.series span{transform:translateY(-50%) rotate(180deg)}.seriesMark{opacity:1;transform:none;filter:none;animation:none}#filter .diveShot img{will-change:auto;transform:none!important}#why .binding-virus,#why .binding-link{transition:none}#coda .rf-dial{transform:none!important}}
+@media (prefers-reduced-motion:reduce){#potSvg .fl,#wsurf,#oySvg .flow-dash{animation:none}.plate img{transform:none!important}.title,.deck,.cue{animation:none;opacity:1}.series::before,.series span{animation:none;opacity:1;filter:none}.series span{transform:translateY(-50%) rotate(180deg)}.seriesMark{opacity:1;transform:none;filter:none;animation:none}#filter .diveShot img{will-change:auto;transform:none!important}#why .binding-virus,#why .binding-link{transition:none}#coda .rf-dial{transform:none!important}}
 </style>
 <script>document.documentElement.classList.add("js");</script>
-</head>
-<body>
+</head><body>
 <div id="rail"><i></i><div id="chap"></div></div>
 <canvas id="sea" aria-hidden="true"></canvas>
 <div class="vignette" aria-hidden="true"></div>
@@ -357,7 +364,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <section class="act" id="cover" style="height:140vh" data-transition-extra="10"><div class="stage">
 <div class="plate"><img data-ab="163845,58767f,e8d0af" src="./00-cover.jpg" alt="잘게 부순 얼음 위에 놓인 생굴 한 접시와 레몬" data-k="1.12,1.0" fetchpriority="high"></div>
 <div class="scrim full"></div><div class="scrim dim" data-dim="0.7,1,0,1"></div>
-<div class="cover-wrap"><h1 class="title">러시안<br><b>굴</b>렛</h1></div>
+<div class="cover-wrap"><h1 class="title">러시안<br><b>굴</b>렛</h1><p class="deck">같은 굴을 나눠 먹어도<br>누구는 앓고 누구는 멀쩡하다.</p></div>
 <div class="series" aria-label="딥 스크롤 시리즈 4편"><span>DEEP SCROLL · 04</span></div>
 <div class="cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
 </div></section>
@@ -520,8 +527,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <a class="rel-card" href="https://www.asiae.co.kr/visual-news/article/2026101613482578715" target="_blank" rel="noopener"><span class="src-thumb"><img src="./23-rel-shoes.jpg" alt="" aria-hidden="true" loading="lazy"></span><span class="rel-body"><span><span class="rel-no">03</span><span class="src-title">“제발 좀 벗어” 기어이 침대까지 가더니…‘대변 세균’이 덮쳤다</span></span><span class="src-go"><b>보러 가기</b><i></i></span></span></a>
 </div></div>
 <div class="seriesMark" id="seriesMark" aria-hidden="true">DEEP SCROLL</div>
-</div></footer>
-<script>
+</div></footer><script>
 (()=>{
 "use strict";
 const calm=matchMedia("(prefers-reduced-motion: reduce)").matches,LITE=matchMedia("(pointer:coarse),(max-width:720px)").matches;
@@ -537,8 +543,11 @@ const tearH=(cx,cy,rx,ry,N,fr)=>{const p=[];for(let i=0;i<N;i++){const a=i/N*Mat
 const tearV=(cx,cy,rx,ry,N,fr)=>{const p=[];for(let i=0;i<N;i++){const a=i/N*Math.PI*2,f=.68+.32*(1-Math.sin(a))/2,r=fr(a);p.push([cx+Math.cos(a)*rx*f*r,cy+Math.sin(a)*ry*r]);}return p;};
 const sector=(r1,r2,a0,a1)=>{const p=(rr,a)=>P2(Math.cos(a*RAD)*rr,Math.sin(a*RAD)*rr);return`M${p(r2,a0)}A${r2} ${r2} 0 0 1 ${p(r2,a1)}L${p(r1,a1)}A${r1} ${r1} 0 0 0 ${p(r1,a0)}Z`;};
 const arcD=(r,a0,a1)=>`M${P2(Math.cos(a0*RAD)*r,Math.sin(a0*RAD)*r)}A${r} ${r} 0 ${a1-a0>180?1:0} 1 ${P2(Math.cos(a1*RAD)*r,Math.sin(a1*RAD)*r)}`;
+/* 사진을 못 불러오면 색 세 개로 대체 그림을 그린다 */
 const abSVG=c=>{const[a,b,d]=c.split(",").map(s=>"#"+s);return enc(`<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="${a}"/><stop offset=".68" stop-color="${b}"/><stop offset="1" stop-color="${a}"/></linearGradient><radialGradient id="a"><stop stop-color="${d}" stop-opacity=".34"/><stop offset="1" stop-color="${d}" stop-opacity="0"/></radialGradient><filter id="b"><feGaussianBlur stdDeviation="74"/></filter></defs><rect width="1600" height="900" fill="url(#g)"/><ellipse cx="1150" cy="240" rx="490" ry="410" fill="url(#a)"/><g opacity=".3" filter="url(#b)"><ellipse cx="1050" cy="700" rx="510" ry="150" fill="${d}"/><ellipse cx="390" cy="170" rx="190" ry="300" fill="${b}"/></g><path d="M0 640Q260 540 540 650T1060 630T1600 590V900H0Z" fill="${a}" opacity=".43"/><path d="M0 715Q350 570 800 735T1600 700" stroke="${d}" stroke-width="3" fill="none" opacity=".23"/></svg>`);};
 $$(".plate img,.src-thumb img").forEach(img=>{const miss=()=>{if(img.dataset.ab&&!img.dataset.abUsed){img.dataset.abUsed="1";img.src=abSVG(img.dataset.ab);img.closest(".plate")?.classList.add("abstract-photo");return;}img.style.visibility="hidden";img.closest(".plate")?.classList.add("miss");};if(img.complete&&img.naturalWidth===0)miss();img.addEventListener("error",miss);});
+/* 장면이 가까워지면 그 장면 사진을 미리 받아 둔다 */
+if(window.IntersectionObserver){const warm=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.querySelectorAll('img[loading="lazy"]').forEach(i=>{i.decoding="async";i.loading="eager";});warm.unobserve(e.target);}),{rootMargin:"250% 0px"});$$(".act").forEach(a=>warm.observe(a));}
 $$(".beat .line").forEach(l=>{l.innerHTML=l.innerHTML.split(/<br\s*\/?>/i).map(t=>`<span class="ln"><span>${t}</span></span>`).join("");});
 /* 온도와 떠다니는 입자 */
 const heat={t:0,target:0,d:.6,dT:.6};
@@ -591,14 +600,14 @@ act.dim.forEach(({d,v})=>{d.style.opacity=lerp(v[2],v[3],norm(p,v[0],v[1])).toFi
 act.shows.forEach(({d,v})=>{const W=.04;d.style.opacity=((v[0]<=0?1:clamp((p-v[0])/W+.5))*(v[1]>=1?1:clamp((v[1]-p)/W+.5))).toFixed(3);});
 if(act.fx&&FX[act.fx]&&FX[act.fx](p,act.el,act,now))busy=true;
 return busy;}
-/* 숫자: 막대 그래프와 유행 달력 */
+/* 숫자: 막대 그래프(상한 12,000으로 '+29%' 표시를 그래프 안에 둔다)와 유행 달력 */
 (()=>{
-const D=[[2022,4673],[2023,5926],[2024,6766],[2025,8731]],W=520,B=222,T=26,MAX=9000,L=64,bw=64,gap=(W-L-20-bw*4)/3,X=i=>L+10+i*(bw+gap),HH=v=>(B-T)*v/MAX;
+const D=[[2022,4673],[2023,5926],[2024,6766],[2025,8731]],W=520,B=222,T=26,MAX=12000,L=64,bw=64,gap=(W-L-20-bw*4)/3,X=i=>L+10+i*(bw+gap),HH=v=>(B-T)*v/MAX;
 let h=`<svg viewBox="0 0 ${W} 262" role="img" aria-label="노로바이러스 감염증 신고 건수: 2022년 4,673건, 2023년 5,926건, 2024년 6,766건, 2025년 8,731건"><defs><linearGradient id="cbA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FCFCD"/><stop offset="1" stop-color="#2A5E63" stop-opacity=".25"/></linearGradient><linearGradient id="cbB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2FBFA"/><stop offset=".4" stop-color="#7CC3C2"/><stop offset="1" stop-color="#2A5E63" stop-opacity=".3"/></linearGradient><marker id="arw" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#9FD8D6" stroke-width="1.6"/></marker></defs>`;
-[0,3000,6000,9000].forEach(v=>{const y=B-HH(v);h+=`<line x1="${L}" x2="${W-8}" y1="${y}" y2="${y}" stroke="rgba(236,241,239,${v?.09:.35})" ${v?'stroke-dasharray="2 5"':""}/><text x="${L-10}" y="${y+6}" text-anchor="end" font-size="16" fill="#6C8592">${v?fmt(v):0}</text>`;});
+[0,4000,8000,12000].forEach(v=>{const y=B-HH(v);h+=`<line x1="${L}" x2="${W-8}" y1="${y}" y2="${y}" stroke="rgba(236,241,239,${v?.09:.35})" ${v?'stroke-dasharray="2 5"':""}/><text x="${L-10}" y="${y+6}" text-anchor="end" font-size="16" fill="#6C8592">${v?fmt(v):0}</text>`;});
 D.forEach(([yr,v],i)=>{const x=X(i),last=i===3;h+=`<rect class="cbr" x="${x}" y="${B}" width="${bw}" height="0" fill="url(#${last?"cbB":"cbA"})"/><rect class="cbc" x="${x}" y="${B}" width="${bw}" height="2" fill="${last?"#fff":"#CDEBEA"}"/><text class="cbv" x="${x+bw/2}" y="${B}" text-anchor="middle" font-size="18" font-weight="700" fill="${last?"#fff":"#CFE3E3"}" opacity="0">${fmt(v)}</text><text x="${x+bw/2}" y="${B+28}" text-anchor="middle" font-size="16" fill="#8FA5AF">${yr}</text>`;});
 const x3=X(2)+bw/2,y3=B-HH(6766)-34,x4=X(3)+bw/2,y4=B-HH(8731)-34,xm=(x3+x4)/2;
-h+=`<g class="ann"><path d="M${x3} ${y3}Q${xm} ${y4-40} ${x4-8} ${y4-4}" fill="none" stroke="#9FD8D6" stroke-width="1.6" stroke-dasharray="3 4" marker-end="url(#arw)"/><rect x="${xm-34}" y="${y4-52}" width="68" height="26" rx="13" fill="#03080B" stroke="#7CC3C2"/><text x="${xm}" y="${y4-33}" text-anchor="middle" font-size="15" font-weight="800" fill="#E6F7F6">+29%</text></g></svg>`;
+h+=`<g class="ann"><path d="M${x3} ${y3}Q${xm} ${y4-30} ${x4-8} ${y4-4}" fill="none" stroke="#9FD8D6" stroke-width="1.6" stroke-dasharray="3 4" marker-end="url(#arw)"/><rect x="${xm-34}" y="${y4-44}" width="68" height="26" rx="13" fill="#03080B" stroke="#7CC3C2"/><text x="${xm}" y="${y4-25}" text-anchor="middle" font-size="15" font-weight="800" fill="#E6F7F6">+29%</text></g></svg>`;
 $("#chart").innerHTML=h;
 const bars=$$("#chart .cbr"),caps=$$("#chart .cbc"),vals=$$("#chart .cbv"),ann=$("#chart .ann");
 const R1=94,R2=130,SEA=[11,12,1,2,3,4];
@@ -730,8 +739,7 @@ lensG.classList.toggle("on",B[2].active);
 const vn=Math.round(36*ease(norm(p,.5,.665)));if(vn!==lastN){lastN=vn;lensV.forEach((v,i)=>v.setAttribute("opacity",i<vn?"1":"0"));}
 const lg=$("#lab-gill"),lm=$("#lab-mus"),ld=$("#lab-gland");
 if(lg){lg.classList.toggle("on",B[0].active||B[1].active);lm.classList.toggle("on",B[1].active);ld.classList.toggle("on",B[1].active||B[2].active);ld.classList.toggle("hot",B[2].active);}};
-})();
-/* 수출 경로와 검사 단계 */
+})();/* 수출 경로와 검사 단계 */
 (()=>{
 const A=[90,176],U=[560,112],arc=`M${A[0]} ${A[1]}Q320 -24 ${U[0]} ${U[1]}`;
 let h=`<svg viewBox="0 0 640 272" role="img" aria-label="한국에서 미국으로 수출된 냉동 굴 6건에서 노로바이러스가 검출됐다"><defs><radialGradient id="rtF"><stop offset=".3" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="rtM"><rect width="640" height="272" fill="url(#rtF)"/></mask></defs><g mask="url(#rtM)" fill="rgba(169,189,198,.24)">`;
@@ -940,21 +948,22 @@ req();
 })();
 </script>
 <script>
-/* 장면 겹침: 다음 막은 --xb 동안 같은 자리에서 뜬다. data-xt 막은 tide·iris·heat 모양으로 열린다. 움직임 줄이기면 모두 겹쳐 띄우기 */
+/* 장면 겹침 + 전환 경계 빛: 다음 막은 --xb 동안 같은 자리에서 뜬다. data-xt 막은 tide·iris·heat 모양으로 열리고 경계에 빛이 따라간다. 움직임 줄이기면 모두 겹쳐 띄우기 */
 (function(){
 var root=document.documentElement,main=document.querySelector('main');if(!main)return;
 var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var acts=Array.prototype.filter.call(main.children,function(el){return el.classList.contains('act')&&el.firstElementChild;});if(acts.length<2)return;
 var probe=document.createElement('div');probe.setAttribute('aria-hidden','true');probe.style.cssText='position:absolute;top:0;left:0;width:1px;height:var(--xb);visibility:hidden;pointer-events:none';document.body.appendChild(probe);
-var secs=acts.slice(1).map(function(s){var st=s.firstElementChild;st.classList.add('xs');return{s:s,st:st,o:-1,t:calm?'':(s.dataset.xt||'')};});
+var secs=acts.slice(1).map(function(s){var st=s.firstElementChild,t=calm?'':(s.dataset.xt||''),e=null;st.classList.add('xs');if(t){e=document.createElement('i');e.className='xedge '+(t==='tide'?'tide':'ring'+(t==='heat'?' heat':''));e.setAttribute('aria-hidden','true');st.appendChild(e);}return{s:s,st:st,o:-1,t:t,e:e};});
 acts[0].classList.add('xon');root.classList.add('xf');
 var XB=1,queued=false;
 function measure(){XB=Math.max(1,probe.offsetHeight||innerHeight*.14);}
 function shape(t,o){if(o>=1)return'none';if(t==='tide')return'inset('+((1-o)*100).toFixed(2)+'% 0 0 0)';if(t==='heat')return'circle('+(o*150).toFixed(1)+'% at 50% 100%)';return'circle('+(o*75).toFixed(1)+'% at 50% 50%)';}
+function edge(x,o){var e=x.e;if(!e)return;if(o<=0||o>=1){e.style.opacity='0';return;}e.style.opacity='1';var w=x.st.clientWidth,h=x.st.clientHeight;if(x.t==='tide'){e.style.top=((1-o)*h).toFixed(1)+'px';return;}var r=(x.t==='heat'?1.5:.75)*o*Math.sqrt(w*w+h*h)/Math.SQRT2;e.style.width=e.style.height=(2*r).toFixed(1)+'px';e.style.left=(w/2)+'px';e.style.top=(x.t==='heat'?h:h/2)+'px';}
 function update(){queued=false;secs.forEach(function(x){var top=x.s.getBoundingClientRect().top,o=top>0?0:Math.min(1,-top/XB);x.s.classList.toggle('xon',top<=1);if(o===x.o)return;x.o=o;
-if(x.t){var c=shape(x.t,o);x.st.style.clipPath=c;x.st.style.webkitClipPath=c;x.st.style.opacity=o>0?'1':'0';}else x.st.style.opacity=o.toFixed(4);});}
+if(x.t){var c=shape(x.t,o);x.st.style.clipPath=c;x.st.style.webkitClipPath=c;x.st.style.opacity=o>0?'1':'0';edge(x,o);}else x.st.style.opacity=o.toFixed(4);});}
 function queue(){if(!queued){queued=true;requestAnimationFrame(update);}}
-addEventListener('scroll',queue,{passive:true});addEventListener('resize',function(){measure();queue();},{passive:true});
+addEventListener('scroll',queue,{passive:true});addEventListener('resize',function(){measure();secs.forEach(function(x){x.o=-1;});queue();},{passive:true});
 var chap=document.getElementById('chap');
 if(chap)chap.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var el=document.getElementById(a.getAttribute('href').slice(1));if(!el)return;e.preventDefault();e.stopPropagation();var top=el.offsetTop+(acts.indexOf(el)>0?XB:0)+2,mx=Math.max(1,root.scrollHeight-innerHeight);if(window.__oyHosted&&window.__oySend)window.__oySend('goto',{progress:Math.min(1,top/mx)});else scrollTo({top:top,behavior:calm?'auto':'smooth'});},true);
 measure();update();dispatchEvent(new Event('scroll'));
@@ -962,7 +971,7 @@ measure();update();dispatchEvent(new Event('scroll'));
 </script>
 <script type="module">
 /* 왜 나만: 3D. 가까워질 때만 three.js를 불러오고, 실패·움직임 줄이기면 2D(html.no3d).
-   0.02~0.16 착지(닿은 항원 발광) / 0.22~0.40 항원 사라짐·이탈(비분비형) / 0.44~0.56 재결합 / 0.62~0.72 다른 유형 / 0.82~0.95 떠남 */
+   0.02~0.16 착지(닿은 항원 발광·접점 파문) / 0.22~0.40 항원 사라짐·이탈(비분비형) / 0.44~0.56 재결합 / 0.62~0.72 다른 유형 / 0.82~0.95 떠남 */
 const box=document.getElementById("why3d"),root=document.documentElement,no3d=()=>root.classList.add("no3d");
 const calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
 let ok=false;try{const c=document.createElement("canvas");ok=!!(c.getContext("webgl2")||c.getContext("webgl"));}catch(e){}
@@ -1022,6 +1031,8 @@ const PN=LITE?140:300,pp=new Float32Array(PN*3);for(let i=0;i<PN;i++){pp[i*3]=(r
 const dg=new T.BufferGeometry();dg.setAttribute("position",new T.BufferAttribute(pp,3));
 const spr=(()=>{const c=document.createElement("canvas");c.width=c.height=64;const x=c.getContext("2d"),g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,"rgba(255,236,242,1)");g.addColorStop(.4,"rgba(255,220,232,.35)");g.addColorStop(1,"rgba(255,220,232,0)");x.fillStyle=g;x.fillRect(0,0,64,64);const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;return t;})();
 const dust=new T.Points(dg,new T.PointsMaterial({size:.09,map:spr,transparent:true,opacity:.5,depthWrite:false,color:0xf3d7dd}));sc.add(dust);
+/* 결합 순간 접점에서 퍼지는 분홍 파문 */
+const ring=new T.Mesh(new T.RingGeometry(.18,.24,48),new T.MeshBasicMaterial({color:0xffb7cd,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;sc.add(ring);
 let vis=false,last=0;
 const resize=()=>{const w=box.clientWidth,h=box.clientHeight;if(!w||!h)return;ren.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();};
 resize();addEventListener("resize",resize);
@@ -1037,6 +1048,7 @@ main.position.set(off*2.2*wide,L(2.4,-.5,land)+off*1.3+away*2.6,0);
 const att=land*sA*(1-off)*(1-away);
 ants(sA,t,main.position.x,main.position.z,att);villi(t);
 touch.position.set(main.position.x,main.position.y-.7,main.position.z);touch.intensity=5*att;
+const rp=(t*.7)%1;ring.position.set(main.position.x,H(main.position.x,main.position.z)+.24,main.position.z);ring.scale.setScalar(1+rp*3.2);ring.material.opacity=att*(1-rp)*.55;
 main.rotation.y+=dt*.22*(1-att*.75);main.rotation.x=Math.sin(t*.3)*.15+off*.6;
 vars.forEach(v=>{v.g.scale.setScalar(Math.max(.001,many));const a=v.a+t*.05;v.g.position.set(Math.cos(a)*v.r*wide*1.15,v.y+Math.sin(t*.5+v.ph)*.12+away*2.8,Math.sin(a)*v.r*.6-.6);v.g.rotation.y+=dt*.18;v.g.rotation.z+=dt*.08;});
 dust.rotation.y+=dt*.012;dust.position.y=Math.sin(t*.2)*.08;
