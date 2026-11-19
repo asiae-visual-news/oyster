@@ -24,7 +24,8 @@
 /* 04편 규칙: 기사 톤, 게임 장치·흔들림 없음. 기자 경험 밖 장면은 지어내지 않는다. 날것=청록, 익힘=호박, 바이러스=연분홍.
    3D는 '왜 나만' 한 곳. 장면 사이는 밀어 올리지 않는다. 전환은 겹쳐 띄우기(보간) + 바다만 물 차오르기. 사진이 다 뜬 뒤 글이 나온다.
    여섯 개 접시 모티프: A씨(다섯 번) → 그날의 밥상 → 마지막 접시. 마지막 접시는 화살표·눈금 없이 한 번 돌고 멈춘다. 잠복기는 시계 시각에 맞춰 색온도가 바뀐다.
-   오해 장면은 오해가 지워지는 동안 레몬 쪽으로 다가갔다가, 비브리오균 대목에서 갯벌로 물러난다. */
+   오해 장면은 오해가 지워지는 동안 레몬 쪽으로 다가갔다가, 비브리오균 대목에서 갯벌로 물러난다.
+   장면 높이: 대목이 비좁던 장면만 대목당 화면 높이 약 45%가 되게 늘렸다. 급하게 내리는 사람을 위해 전체 길이는 13%만 늘리고, 스크롤을 붙잡는 곳은 A씨 첫 문장 한 곳뿐이다. */
 :root{--ink:#07151b;--ink-2:#0e242b;--slate:#91aeb6;--slate-lt:#A9BDC6;--chalk:#f4f8f7;--brine:#96e1df;--flame:#EE9A5C;--noro:#F08DAE;--sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;--serif:"Song Myung","Noto Serif KR",serif;--gut:clamp(20px,5vw,64px);--xb:20svh;--read-col:39ch}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
@@ -388,7 +389,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower" data-band="0.70,0.97"><p class="line">두세 명이 같은 상에서 굴을 먹었는데<br>A씨만 탈이 난 날도 있었다.</p><p class="note">같은 음식을 먹고도 왜 결과는 달랐을까.</p></div>
 </div></section>
 <!-- 숫자 -->
-<section class="act" id="numbers" data-fx="numbers" style="height:255vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="numbers" data-fx="numbers" style="height:285vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.66"><img data-ab="063f51,73b7bd,b5e4e5" loading="lazy" src="./01-sea.jpg" alt="겨울 새벽, 부표가 줄지어 떠 있는 굴 양식장" data-k="1.0,1.12"></div>
 <div class="plate" data-show="0.66,1"><img data-ab="063f51,73b7bd,b5e4e5" loading="lazy" src="./01-market.jpg" alt="수산시장 좌판에 쌓인 껍데기째 굴" data-k="1.08,1.0" data-pan="2.5,-2.5"></div>
 <div class="scrim heavy"></div>
@@ -412,7 +413,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower origin-reveal" data-band="0.72,0.98"><p class="kicker noro">바닷물 속 바이러스의 출처</p><p class="line">굴 속 노로바이러스의 출발점은<br><em class="fecal">사람의 분변</em>일 수 있다.</p><p class="note">감염자의 분변에 섞인 바이러스가 하수 등을 거쳐 양식 해역으로 들어갈 수 있다. 굴은 오염된 물을 거르면서 바이러스를 축적하고, 이를 날로 먹은 사람은 다시 감염될 수 있다. 모든 굴이 오염됐다는 뜻은 아니다.</p></div>
 </div></section>
 <!-- 그날의 밥상 -->
-<section class="act" id="tbl" data-fx="tbl" style="height:245vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="tbl" data-fx="tbl" style="height:285vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="3b3538,6d5550,edd9bf" loading="lazy" src="./04-room.jpg" alt="" aria-hidden="true" data-k="1.06,1.0"></div>
 <div class="scrim heavy"></div><div class="tbl" id="tblBox"></div><div class="scrim bottom" style="z-index:4"></div>
 <div class="beat lower" data-band="0.02,0.30"><p class="kicker">그날의 밥상</p><p class="line">상에는 생굴 한 접시와<br>굴젓이 올랐다.</p><p class="note">굴젓도 생굴을 소금에 절여 만드는 음식이다.</p></div>
@@ -435,7 +436,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower" data-band="0.82,0.98"><p class="kicker">증상 없는 감염</p><p class="line">아프지 않은 사람도<br>바이러스를 옮길 수 있다.</p><p class="note">2018년 81개 연구를 분석한 메타분석에서 증상이 없는 조사 대상자의 노로바이러스 검출률은 평균 7%였다. 겉으로 멀쩡해도 바이러스를 배출할 수 있다는 뜻이다.</p></div>
 </div></section>
 <!-- 잠복기 -->
-<section class="act" id="clock" data-fx="clock" style="height:285vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="clock" data-fx="clock" style="height:330vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.48"><img data-ab="193a56,49839c,b4d5e4" loading="lazy" src="./05-table.jpg" alt="" aria-hidden="true" data-k="1.0,1.1"></div>
 <div class="plate" data-show="0.48,1"><img data-ab="193a56,49839c,b4d5e4" loading="lazy" src="./05-night.jpg" alt="" aria-hidden="true" data-k="1.1,1.0" data-pan="2,-2"></div>
 <div class="clk-grade g1" id="clkG1" aria-hidden="true"></div><div class="clk-grade g2" id="clkG2" aria-hidden="true"></div>
@@ -447,7 +448,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower" data-band="0.78,0.98"><p class="line">대부분 1~3일 안에<br>회복한다.</p><p class="note">문제는 탈수다. 특히 어린이와 고령자, 면역력이 약한 사람은 심해질 수 있어 주의해야 한다.</p></div>
 </div></section>
 <!-- 수출 (지명·업체 없이 검사 체계로 설명) -->
-<section class="act" id="usa" data-fx="usa" style="height:260vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="usa" data-fx="usa" style="height:285vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.66"><img data-ab="163849,537e89,e0ddd2" loading="lazy" src="./03-port.jpg" alt="수출용 냉동 컨테이너가 늘어선 항구" data-k="1.08,1.0"></div>
 <div class="plate" data-show="0.66,1"><img data-ab="163849,537e89,e0ddd2" loading="lazy" src="./01-sea.jpg" alt="" aria-hidden="true" data-k="1.1,1.0"></div>
 <div class="scrim heavy"></div>
@@ -456,7 +457,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower" data-band="0.70,0.98"><p class="kicker">산지</p><p class="line">굴은 한국의 대표<br>수출 수산물이다.</p><p class="note">한국은 세계 2위 굴 생산국이다. 국회에서는 생산 해역의 오염원 관리와 수출 전 검사를 강화해야 한다는 지적이 나왔다. 식약처는 2027년 2월 26일까지 생식용 굴을 포함한 겨울철 수산물 720건을 수거해 검사할 계획이다.</p></div>
 </div></section>
 <!-- 흔한 오해 -->
-<section class="act" id="myth" data-fx="myth" style="height:255vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="myth" data-fx="myth" style="height:280vh" data-transition-extra="26"><div class="stage">
 <div class="plate myth-lemon"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-lemon.jpg" alt="생굴 위로 레몬즙을 짜는 손"></div>
 <div class="plate myth-shore"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-shore.jpg" alt="" aria-hidden="true"></div>
 <div class="scrim heavy"></div>
@@ -470,7 +471,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower" data-band="0.68,0.98"><p class="kicker">비브리오균</p><p class="line">생굴에는<br>비브리오균도 있을 수 있다.</p><p class="note">비브리오균은 연안 바닷물에 자연적으로 사는 세균이다. 그중 비브리오 불니피쿠스균은 패혈증을 일으킬 수 있다. 미국 CDC에 따르면 이 균 감염자의 약 20%가 숨진다. 노로바이러스와는 다른 위험이다.</p></div>
 </div></section>
 <!-- 익히기 -->
-<section class="act" id="heat" data-fx="heat" style="height:300vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="heat" data-fx="heat" style="height:330vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.28"><img data-ab="472c2b,b56a42,ffe0b5" loading="lazy" src="./08-boil.jpg" alt="" aria-hidden="true" data-k="1.1,1.0"></div>
 <div class="plate" data-show="0.28,0.52"><img data-ab="472c2b,b56a42,ffe0b5" loading="lazy" src="./08-fry.jpg" alt="" aria-hidden="true" data-k="1.0,1.08" data-pan="2,-2"></div>
 <div class="plate" data-show="0.52,0.76"><img data-ab="472c2b,b56a42,ffe0b5" loading="lazy" src="./08-oven.jpg" alt="" aria-hidden="true" data-k="1.08,1.0"></div>
@@ -482,7 +483,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat centre" data-band="0.78,0.99"><p class="kicker warm">식약처 기준</p><div class="pkg" aria-hidden="true"><span class="pkgName">굴</span><span class="pkgW">150g</span><span class="pkgTag">가열조리용</span><span class="pkgNote">익혀서 드세요</span></div><p class="fig warm mid">85<small>℃</small><small> · </small>1<small>분</small></p><p class="figcap">포장에 ‘가열조리용’이나 ‘익혀 먹는’이 적힌 굴은<br>중심 온도 85℃ 이상에서 1분 이상 익혀야 한다</p><p class="figsub">‘가열조리용’ 표시는 날로 먹지 말라는 뜻이다.</p></div>
 </div></section>
 <!-- 껍데기째 -->
-<section class="act" id="pot" data-fx="pot" style="height:215vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="pot" data-fx="pot" style="height:270vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="4c302a,bf7844,ffdfad" loading="lazy" src="./09-stove.jpg" alt="" aria-hidden="true" data-k="1.06,1.0"></div>
 <div class="scrim heavy"></div>
 <div class="potBox"><svg id="potSvg" viewBox="0 0 1000 600" role="img" aria-label="끓는 냄비 속 껍데기째 굴이 하나씩 벌어지고, 끝까지 닫힌 굴 하나는 버린다"></svg></div>
@@ -492,7 +493,7 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="beat lower" data-band="0.70,0.99"><p class="line">끝까지 열리지 않는 굴은<br>버린다.</p></div>
 </div></section>
 <!-- 주방 -->
-<section class="act" id="kitchen" data-fx="kitchen" style="height:250vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="kitchen" data-fx="kitchen" style="height:270vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="4d4137,b08b69,f4e0c0" loading="lazy" src="./10-kitchen.jpg" alt="" aria-hidden="true" data-k="1.0,1.08" data-pan="-2.5,2"></div>
 <div class="scrim side"></div>
 <div class="beat lower" data-band="0.02,0.70" style="max-width:min(760px,90vw)"><p class="kicker">조리 위생</p><p class="line">생굴을 손질한 손과 도마도<br>오염 경로가 될 수 있다.</p>
@@ -847,15 +848,15 @@ pr.setAttribute("x2",X(hr).toFixed(1));dot.setAttribute("cx",X(hr).toFixed(1));
 syms.forEach((s,i)=>s.classList.toggle("lit",s.classList.contains("dry")?p>.80:(p>.51&&hr>=12+i*1.5)));
 if(g1&&g2){const s=sky((tot%1440)/60),k=s.join("|");if(k!==skyK){skyK=k;g1.style.background=s[0];g1.style.opacity=s[1];g2.style.background=s[2];g2.style.opacity=s[3];}}};
 })();
-/* 흔한 오해: 장면이 다 뜬 뒤(p≈.155)부터 한 줄씩. 스크롤이 빨라도 줄 사이 최소 0.42초, 되돌아갈 땐 바로 지운다.
-   오해가 지워지는 동안(.17~.60) 레몬 쪽으로 천천히 다가가고, 비브리오균 대목으로 넘어가며(.62~.70) 갯벌 사진으로 바뀐 뒤 넓게 물러난다(~.86) */
+/* 흔한 오해: 장면이 다 뜬 뒤(p≈.13)부터 한 줄씩. 스크롤이 빨라도 줄 사이 최소 0.42초, 되돌아갈 땐 바로 지운다.
+   오해가 지워지는 동안(.15~.60) 레몬 쪽으로 천천히 다가가고, 비브리오균 대목으로 넘어가며(.62~.70) 갯벌 사진으로 바뀐 뒤 넓게 물러난다(~.86) */
 (()=>{const rows=$$("#myths .my"),GAP=420,lemon=$("#myth .myth-lemon"),shore=$("#myth .myth-shore"),li=lemon.querySelector("img"),si=shore.querySelector("img");let shown=0,lastStep=0;
 rows.forEach(r=>{const s=r.querySelector("s");if(s&&!s.querySelector("i"))s.innerHTML="<i>"+s.innerHTML+"</i>";});
-FX.myth=(p,el,act,now)=>{let want=0;rows.forEach((r,i)=>{if(p>.20+i*.083)want=i+1;});
+FX.myth=(p,el,act,now)=>{let want=0;rows.forEach((r,i)=>{if(p>.18+i*.085)want=i+1;});
 if(want<shown)shown=want;else if(want>shown&&now-lastStep>=GAP){shown++;lastStep=now;}
 rows.forEach((r,i)=>r.classList.toggle("on",i<shown));
 const x=ease(norm(p,.62,.70));lemon.style.opacity=(1-x).toFixed(3);shore.style.opacity=x.toFixed(3);
-if(!calm){const ls=lerp(1,1.18,smooth(norm(p,.17,.60)))-.08*x,ss=lerp(1.24,1,easeOut(norm(p,.63,.86)));li.style.transform=`scale(${ls.toFixed(4)})`;si.style.transform=`scale(${ss.toFixed(4)})`;}
+if(!calm){const ls=lerp(1,1.18,smooth(norm(p,.15,.60)))-.08*x,ss=lerp(1.24,1,easeOut(norm(p,.63,.86)));li.style.transform=`scale(${ls.toFixed(4)})`;si.style.transform=`scale(${ss.toFixed(4)})`;}
 return shown!==want;};})();
 /* 익히기: 다이얼식 온도계와 타이머 */
 (()=>{
@@ -873,7 +874,7 @@ const k=c.o.rv,kt=easeOut(clamp(k/.45)),km=clamp((k-.35)/.65),T=c.T*kt;
 c.v.setAttribute("stroke-dashoffset",(1-T/250).toFixed(4));c.n.setAttribute("transform",`rotate(${(135+270*T/250).toFixed(2)})`);c.t.textContent=Math.round(T)+"℃";
 const s=Math.round(c.M*60*km);c.m.textContent=pad(Math.floor(s/60))+":"+pad(s%60);c.r.setAttribute("stroke-dashoffset",(1-km).toFixed(4));});};
 })();
-/* 껍데기째 끓이는 냄비. 껍데기는 글이 나온 뒤(.24~)부터 하나씩 벌어진다 */
+/* 껍데기째 끓이는 냄비. 껍데기는 글이 나온 뒤(.20~)부터 하나씩 벌어진다 */
 (()=>{
 const svg=$("#potSvg"),R=srand(17),OY=[{x:300,y:452},{x:384,y:432},{x:468,y:458},{x:552,y:434},{x:636,y:456},{x:716,y:434}],CLOSED=3,ORDER=[0,4,2,5,1],blur=LITE?"":' filter="url(#sb)"';
 let h=`<defs>
@@ -907,13 +908,13 @@ const flames=$("#flames"),bubs=$("#pbubs"),steam=$("#psteam"),timer=$("#ptimer")
 FX.pot=(p,el,act)=>{
 const B=act.beats,k=norm(p,.02,.12);
 flames.setAttribute("opacity",(.3+.7*k).toFixed(2));bubs.setAttribute("opacity",norm(p,.06,.14).toFixed(2));steam.setAttribute("opacity",norm(p,.08,.18).toFixed(2));
-ORDER.forEach((i,j)=>{const o=ease(norm(p,.24+j*.03,.28+j*.03));tops[i].setAttribute("transform",`rotate(${(-48*o).toFixed(1)} -46 -4)`);});
+ORDER.forEach((i,j)=>{const o=ease(norm(p,.20+j*.035,.245+j*.035));tops[i].setAttribute("transform",`rotate(${(-48*o).toFixed(1)} -46 -4)`);});
 const ck=norm(p,.4,.66);meats.forEach((m,i)=>{if(i!==CLOSED)m.setAttribute("fill",mixHex("#D8CFC0","#D29A5C",ck));});
 const tm=5*ease(norm(p,.42,.62));tT.textContent="+"+Math.floor(tm)+":"+pad(Math.floor((tm%1)*60));
 timer.setAttribute("opacity",(norm(p,.38,.42)*(1-.6*norm(p,.68,.72))).toFixed(2));ring.setAttribute("opacity",norm(p,.7,.74).toFixed(2));
 stamp.classList.toggle("hit",B[2].active||B[2].past);};
 })();
-/* 주방: 장면이 다 뜬 뒤(p≈.16)부터 하나씩 체크 */
+/* 주방: 장면이 다 뜬 뒤(p≈.14)부터 하나씩 체크 */
 (()=>{const items=$$("#chkList li");FX.kitchen=p=>items.forEach((li,j)=>li.classList.toggle("on",p>.20+j*.11));})();
 /* 익힌 굴: 사진 전환과 마지막 접시. 접시가 다 뜨면 시계 방향으로 240° 돌다 서서히 멈추고(움직임 줄이기면 돌지 않음),
    그사이 처음 물들었던 굴 하나가 흐려져 여섯 개가 똑같아진다(겉으로는 구별할 수 없다). 위로 되돌아가 접시가 사라지면 처음 자리로 돌아간다 */
