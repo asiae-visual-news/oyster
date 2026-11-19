@@ -1179,69 +1179,86 @@ requestAnimationFrame(loop);}
 requestAnimationFrame(loop);
 })();
 
-/* ─────────── 인터랙티브 환경음: 바다 / 식탁 / 오염의 반전 / 장 / 주방 ─────────── */
+/* ─────────── 환경음 v7: 파도는 3초짜리 낮은 인트로, 장면별 효과음은 독립 재생 ─────────── */
 (()=>{
 const btn=$("#sound"),hint=$("#soundHint"),st=$("#soundSt");
 const files={sea:"./sea.mp3",table:"./table.mp3",cook:"./cook.mp3",pulse:"./pulse.mp3",source:"./source.mp3"};
-const players=Object.fromEntries(Object.entries(files).map(([k,url])=>{const a=new Audio();a.src=url;a.preload="auto";a.loop=!(["table","source"].includes(k));a.playsInline=true;a.volume=0;return[k,a]}));
-const clampSound=v=>Math.max(0,Math.min(1,v));
-let on=true,unlocked=false,scene="cover",frame=0,paused=false,lastTable="",sourcePlayed=false,lastTableAt=0,lastSourceAt=0;
-const sceneIds=["cover","intro","numbers","filter","tbl","why","clock","usa","myth","heat","pot","kitchen","coda"];
-const onCover=()=>{const e=document.getElementById("cover");if(!e)return false;const r=e.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4;};
-function hintState(){const show=on&&!unlocked&&onCover();hint.classList.toggle("show",show);hint.setAttribute("aria-hidden",String(!show));}
-function findScene(){
- let winner="cover";
- for(let i=0;i<sceneIds.length;i++){
-  const id=sceneIds[i],el=document.getElementById(id);if(!el)continue;
-  const r=el.getBoundingClientRect();
-  if(r.bottom<=innerHeight*.43||r.top>=innerHeight*.57)continue;
+const ids=["cover","intro","numbers","filter","tbl","why","clock","usa","myth","heat","pot","kitchen","coda"];
+const AC=window.AudioContext||window.webkitAudioContext;
+const C=v=>Math.max(0,Math.min(1,v));
+let on=true,unlocked=false,ctx=null,master=null,frame=0,scene=null,paused=false;
+let seaPlayed=false,tablePlayed=false,sourcePlayed=false,tableAt=0,sourceAt=0,gestureAt=0;
+const buffers={},loading={},loops={};
+function onCover(){const e=document.getElementById("cover");if(!e)return false;const r=e.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4;}
+function ui(){btn.setAttribute("aria-checked",String(on));btn.classList.toggle("on",on);btn.classList.toggle("armed",on&&!unlocked);st.textContent=on?"ON":"OFF";
+ const show=on&&(!unlocked||(ctx&&ctx.state!=="running"))&&onCover();hint.classList.toggle("show",show);hint.setAttribute("aria-hidden",String(!show));}
+// Never default to 'cover' if the viewport lies between chapters: that caused ghost wave playback.
+function findScene(){const mid=innerHeight*.5;let pick=null,score=-1;
+ for(let i=0;i<ids.length;i++){const id=ids[i],el=document.getElementById(id);if(!el)continue;
+  const r=el.getBoundingClientRect();if(r.top>mid||r.bottom<=mid)continue;
   const stage=el.querySelector(".stage")||el;
-  const op=stage.classList.contains("xs")?clampSound(Number(stage.style.opacity)||0):1;
-  // During overlap, prefer the incoming scene once it becomes visually dominant.
-  // Comparing computed opacity previously let the OLD sea scene keep playing until the very end.
-  if(op>=.35)winner=id;
- }
- return winner;
-}
-function progress(id){const el=document.getElementById(id);if(!el)return 0;const r=el.getBoundingClientRect(),vh=innerHeight,extra=(Number(el.dataset.transitionExtra)||0)*vh/100;return clampSound(-r.top/Math.max(1,r.height-vh-extra));}
-function play(k){const a=players[k];if(!on||!unlocked||document.hidden||!a)return;const p=a.play();if(p&&p.catch)p.catch(()=>{if(onCover()){hint.textContent="화면을 클릭하면 소리가 납니다";hint.classList.add("show");}});}
-function stopAll(){Object.values(players).forEach(a=>{a.pause();a.volume=0;});}
-function fade(k,target){const a=players[k],d=target-a.volume;const v=clampSound(a.volume+Math.sign(d)*Math.min(Math.abs(d),d>0?.045:.034));a.volume=v;if(v>.005&&a.paused)play(k);else if(v<.006&&!a.paused)a.pause();}
-function oneShot(k,volume){const a=players[k];a.pause();a.currentTime=0;a.volume=clampSound(volume);play(k);}
-function refresh(){
- if(!on||!unlocked||document.hidden)return;
- const id=findScene(),p=id==="filter"?progress("filter"):0;scene=id;
- // Waves are a low, short ambient accent, NOT the soundtrack for the whole article.
- // Preserve the original scene order and speed; fade out before the sewage reveal.
- const sea=id==="cover"?.036:id==="filter"?.074*(1-(p<=.40?0:p>=.66?1:((p-.40)/.26)**2*(3-2*((p-.40)/.26)))):0;
- const pulse=id==="why"?.30:id==="clock"?.22:id==="usa"?.17:id==="myth"?.14:id==="filter"&&p>.64?.23:0;
- const cook=id==="heat"?.25:id==="pot"?.34:id==="kitchen"?.28:id==="coda"?.13:0;
- const speaking=!players.table.paused||!players.source.paused;
- // Let the one-shot sounds (soju pour and fecal-water reveal) come forward.
- fade("sea",speaking?sea*.32:sea);
- fade("pulse",speaking?pulse*.38:pulse);
- fade("cook",speaking?cook*.32:cook);
- // At the dinner table a one-time, deliberate pour / glass clink / satisfied sip.
- if(id==="tbl"&&lastTable!==id&&Date.now()-lastTableAt>9000){lastTableAt=Date.now();oneShot("table",.82);}
- if(id==="tbl"||lastTable){lastTable=id==="tbl"?id:"";}
- if(id!=="tbl"&&!players.table.paused){const a=players.table;a.volume=Math.max(0,a.volume-.115);if(a.volume<.02)a.pause();}
- // On the 'human waste' reveal: one dark water-flow cue, not a recurring jingle.
- if(id==="filter"&&p>.715&&!sourcePlayed&&Date.now()-lastSourceAt>8000){sourcePlayed=true;lastSourceAt=Date.now();oneShot("source",.64);}
- if(id!=="filter"||p<.25)sourcePlayed=false;
- if(id!=="filter"&&!players.source.paused){const a=players.source;a.volume=Math.max(0,a.volume-.10);if(a.volume<.02)a.pause();}
- $$(".bars i",btn).forEach((b,k)=>b.style.setProperty("--g",(.21+.48*Math.abs(Math.sin(performance.now()/410+k*1.1))).toFixed(2)));
-}
-function ui(){btn.setAttribute("aria-checked",String(on));btn.classList.toggle("on",on);btn.classList.toggle("armed",on&&!unlocked);st.textContent=on?"ON":"OFF";hintState();}
-function startLoop(){if(frame)return;frame=setInterval(refresh,120);}
-function setAudio(enabled){if(on===enabled)return;on=enabled;if(on&&unlocked){lastTable="";refresh();startLoop();}else{clearInterval(frame);frame=0;stopAll();}ui();}
-function unlock(){if(unlocked||!on)return;unlocked=true;scene="";refresh();startLoop();ui();}
-// Default ON, but real playback is unlocked by an explicit user gesture, as browsers require.
-window.__oySoundStart=()=>{if(!unlocked)unlock();else if(!on)setAudio(true);};
-btn.addEventListener("click",()=>{if(on&&!unlocked)unlock();else setAudio(!on);});
-document.addEventListener("click",e=>{if(e.target?.closest?.("#sound"))return;if(on&&!unlocked)unlock();},true);
-document.addEventListener("keydown",e=>{if(!unlocked&&on&&["Enter"," ","ArrowDown","ArrowUp"].includes(e.key))unlock();},true);
-window.addEventListener("scroll",hintState,{passive:true});
-document.addEventListener("visibilitychange",()=>{if(document.hidden){paused=on;stopAll();}else if(on&&unlocked&&paused){paused=false;refresh();}});
+  const op=stage.classList.contains("xs")?C(parseFloat(stage.style.opacity)||0):1;
+  if(op<.02)continue;
+  const s=op+i*.00001;if(s>score){score=s;pick=id;}}
+ return pick;}
+function progress(id){const el=document.getElementById(id);if(!el)return 0;
+ const r=el.getBoundingClientRect(),vh=innerHeight,extra=(Number(el.dataset.transitionExtra)||0)*vh/100;
+ return C(-r.top/Math.max(1,r.height-vh-extra));}
+function load(k){if(buffers[k])return Promise.resolve(buffers[k]);if(loading[k])return loading[k];if(!ctx)return Promise.resolve(null);
+ loading[k]=fetch(files[k]).then(r=>{if(!r.ok)throw Error("audio "+k+" HTTP "+r.status);return r.arrayBuffer();})
+ .then(raw=>ctx.decodeAudioData(raw)).then(b=>{buffers[k]=b;return b;}).catch(e=>{console.warn("[oyster] sound:",k,e.message);return null;});
+ return loading[k];}
+function ready(){if(ctx)return true;if(!AC)return false;
+ try{ctx=new AC();master=ctx.createGain();master.gain.value=.92;master.connect(ctx.destination);Object.keys(files).forEach(load);return true;}
+ catch(e){console.warn("[oyster] audio context",e);return false;}}
+function resume(){if(!ctx)return;try{const promise=ctx.resume();if(promise&&promise.catch)promise.catch(()=>{});}catch(e){};}
+function one(k,vol,maxSecs){if(!on||!unlocked||!ctx||ctx.state!=="running"||!buffers[k]||document.hidden)return false;
+ const t=ctx.currentTime,src=ctx.createBufferSource(),g=ctx.createGain();src.buffer=buffers[k];src.loop=false;src.connect(g);g.connect(master);
+ const length=Math.min(maxSecs||src.buffer.duration,src.buffer.duration);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(C(vol),t+.08);
+ const fadeAt=Math.max(t+.15,t+length-(k==="sea"?1.5:.32));g.gain.setValueAtTime(C(vol),fadeAt);g.gain.linearRampToValueAtTime(0,t+length);
+ src.start(t,0,length);src.stop(t+length+.02);src.onended=()=>{try{src.disconnect();g.disconnect();}catch(e){}};return true;}
+function level(k,v){if(!ctx||ctx.state!=="running")return;
+ const dest=C(v),now=ctx.currentTime;let t=loops[k];
+ if(dest>.001&&!t){if(!buffers[k])return;const src=ctx.createBufferSource(),g=ctx.createGain();src.buffer=buffers[k];src.loop=true;src.connect(g);g.connect(master);g.gain.setValueAtTime(0,now);src.start();t={src,g,stopping:false};loops[k]=t;}
+ if(!t)return;
+ if(t.stopping&&dest>.001){t.stopping=false;clearTimeout(t.timer);}
+ t.g.gain.cancelScheduledValues(now);t.g.gain.setTargetAtTime(dest,now,dest>.001?.20:.16);
+ if(dest<=.001&&!t.stopping){t.stopping=true;t.timer=setTimeout(()=>{if(t.stopping&&loops[k]===t){try{t.src.stop();t.src.disconnect();t.g.disconnect();}catch(e){}delete loops[k];}},850);}}
+function stopAll(){for(const k of Object.keys(loops)){const t=loops[k];clearTimeout(t.timer);try{t.src.stop();t.src.disconnect();t.g.disconnect();}catch(e){}delete loops[k];}}
+function refresh(){if(!on||!unlocked||!ctx||ctx.state!=="running"||document.hidden)return;
+ const id=findScene(),p=id==="filter"?progress("filter"):0,now=Date.now();
+ // No wave loop, no wave under the food, the intestines, or the kitchen.
+ // Only a very quiet three-second wave accent on the very first cover tap.
+ if(id==="cover"&&!seaPlayed&&performance.now()-gestureAt<6000&&buffers.sea){seaPlayed=one("sea",.012,3.2);}
+ // A clear change of soundscape: tense low pulse -> audible cooking/bubbling.
+ const pulse=id==="intro"?.065:id==="numbers"?.10:id==="filter"?.16:id==="tbl"?.055:id==="why"?.46:id==="clock"?.37:id==="usa"?.25:id==="myth"?.22:0;
+ const cook=id==="heat"?.42:id==="pot"?.60:id==="kitchen"?.55:id==="coda"?.28:0;
+ level("pulse",pulse);level("cook",cook);
+ // Distinct one-time pouring/glass sound when the table becomes visible.
+ if(id!=="tbl")tablePlayed=false;
+ if(id==="tbl"&&!tablePlayed&&now-tableAt>6500&&buffers.table){tablePlayed=one("table",.98);if(tablePlayed)tableAt=now;}
+ // The contamination reveal gets a separate, foreground water-source cue.
+ if(id!=="filter"||p<.28)sourcePlayed=false;
+ if(id==="filter"&&p>.69&&!sourcePlayed&&now-sourceAt>6500&&buffers.source){sourcePlayed=one("source",.94);if(sourcePlayed)sourceAt=now;}
+ // Slow, unobtrusive button bars; no audio file or video changes.
+ $$(".bars i",btn).forEach((bar,i)=>bar.style.setProperty("--g",(.24+.35*Math.abs(Math.sin(performance.now()/630+i))).toFixed(2)));
+ scene=id;}
+function start(){if(frame)return;frame=setInterval(refresh,180);}
+function unlock(){if(!on)return;gestureAt=performance.now();if(!ready())return;unlocked=true;resume();
+ // Buffers preload through fetch; AudioContext was resumed inside the user gesture.
+ // Sounds that start later can therefore be heard on mobile without new autoplay requests.
+ Promise.all(Object.keys(files).map(load)).then(()=>{if(on){refresh();start();}});
+ ui();}
+function setAudio(v){if(on===v)return;on=v;
+ if(!on){clearInterval(frame);frame=0;stopAll();if(ctx&&ctx.state==="running")ctx.suspend().catch(()=>{});}
+ else if(!unlocked)unlock();else{resume();start();refresh();}
+ ui();}
+window.__oySoundStart=()=>{if(!unlocked)unlock();else if(!on)setAudio(true);else resume();};
+btn.addEventListener("click",()=>{if(on&&!unlocked)unlock();else if(on&&ctx&&ctx.state!=="running"){resume();ui();}else setAudio(!on);});
+document.addEventListener("click",e=>{if(e.target?.closest?.("#sound"))return;if(on&&!unlocked)unlock();else if(on&&ctx&&ctx.state!=="running")resume();},true);
+document.addEventListener("keydown",e=>{if(on&&["Enter"," ","ArrowDown","ArrowUp"].includes(e.key)){if(!unlocked)unlock();else if(ctx&&ctx.state!=="running")resume();}},true);
+window.addEventListener("scroll",ui,{passive:true});
+document.addEventListener("visibilitychange",()=>{if(document.hidden){paused=on;stopAll();}else if(on&&unlocked&&paused){paused=false;resume();start();refresh();}});
 window.addEventListener("pagehide",()=>{stopAll();clearInterval(frame);frame=0;});
 ui();
 })();
