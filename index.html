@@ -353,7 +353,9 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 @media (max-width:720px) and (max-height:700px){.readout span{display:none}.fig{font-size:clamp(44px,13vw,68px)}.gauge{width:min(52vw,30vh)}}
 @media (pointer:coarse),(max-width:720px){.beat,.plate img{will-change:auto!important}}
 @media (prefers-reduced-motion:reduce){#potSvg .fl,#wsurf,#oySvg .flow-dash{animation:none}.plate img{transform:none!important}.title,.deck,.cue{animation:none;opacity:1}.series::before,.series span{animation:none;opacity:1;filter:none}.series span{transform:translateY(-50%) rotate(180deg)}.seriesMark{opacity:1;transform:none;filter:none;animation:none}#filter .diveShot img{will-change:auto;transform:none!important}#why .binding-virus,#why .binding-link{transition:none}#coda .rf-dial{transform:none!important}}
-</style>
+.seriesMark{-webkit-text-stroke:1px rgba(124,195,194,.3);background:linear-gradient(100deg,transparent 44%,rgba(214,242,240,.22) 50%,transparent 56%) no-repeat,linear-gradient(180deg,rgba(124,195,194,.1),rgba(124,195,194,.015) 85%);background-size:260% 100%,100% 100%;background-position:120% 0,0 0;-webkit-background-clip:text;background-clip:text;opacity:var(--sm,0);transform:translateY(calc((1 - var(--sm,0)) * 36px));filter:blur(calc((1 - var(--sm,0)) * 4px));transition:none}
+.seriesMark.on{opacity:var(--sm,0);transform:translateY(calc((1 - var(--sm,0)) * 36px));filter:blur(calc((1 - var(--sm,0)) * 4px));animation:smSweep 3.6s .6s cubic-bezier(.4,0,.2,1) both}
+@media (prefers-reduced-motion:reduce){.seriesMark,.seriesMark.on{opacity:.8;transform:none;filter:none;animation:none}}</style>
 <script>document.documentElement.classList.add("js");</script>
 </head><body>
 <div id="rail"><i></i><div id="chap"></div></div>
@@ -879,7 +881,7 @@ label.style.opacity=(.82*(1-norm(p,.45,.56))).toFixed(3);
 if(wheel){const w=ease(norm(p,.46,.65));wheel.style.opacity=(w*.98).toFixed(3);wheel.style.setProperty("--phase",(calm?0:(-24+144*ease(norm(p,.46,.96)))).toFixed(2)+"deg");}};
 })();
 /* 맨 끝 시리즈명 */
-(()=>{const sm=$("#seriesMark");if(!sm)return;new IntersectionObserver(([e],o)=>{if(e.isIntersecting){sm.classList.add("on");o.disconnect();}},{threshold:.3}).observe(sm);})();
+(()=>{const sm=$("#seriesMark");if(!sm)return;let q=0;const up=()=>{q=0;const r=sm.getBoundingClientRect(),vh=innerHeight,abs=r.top+scrollY,range=Math.max(60,document.documentElement.scrollHeight-abs),k=clamp((vh-r.top)/range),e=k*k*(3-2*k);sm.style.setProperty("--sm",(e*.8).toFixed(3));if(k>.7)sm.classList.add("on");};addEventListener("scroll",()=>{if(!q){q=1;requestAnimationFrame(up);}},{passive:true});addEventListener("resize",up);up();})();
 /* 진행선 장 눈금 */
 const chapMarks=[];
 (()=>{
