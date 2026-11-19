@@ -63,9 +63,9 @@ body::after{content:"";position:fixed;inset:-50%;z-index:80;pointer-events:none;
 .scrim.side{background:linear-gradient(90deg,rgba(3,8,11,.93),rgba(3,8,11,.5) 70%,rgba(3,8,11,.3))}
 .scrim.dim{background:#03080B;opacity:0;z-index:6}
 .beat{position:absolute;pointer-events:none;will-change:opacity,transform;z-index:5}
-.js .beat{opacity:0;filter:blur(4px);transform:translateY(16px);transition:opacity .3s ease,filter .3s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.js .beat{opacity:0;transform:translateY(16px);transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)}
 .js .beat.past{transform:translateY(-16px)}
-.js .beat.on{opacity:1;filter:none;transform:none;transition:opacity .32s ease .02s,filter .32s ease .02s,transform .48s cubic-bezier(.16,1,.3,1) .02s}
+.js .beat.on{opacity:1;transform:none;transition:opacity .32s ease .02s,transform .48s cubic-bezier(.16,1,.3,1) .02s}
 .js .beat.centre{transform:translateY(calc(-50% + 16px))}
 .js .beat.centre.past{transform:translateY(calc(-50% - 16px))}
 .js .beat.centre.on{transform:translateY(-50%)}
@@ -690,6 +690,13 @@ body::after{inset:0;opacity:.025;animation:none!important;transform:none!importa
 .source-summary{min-width:0}.source-summary>p{font-size:clamp(13px,1.15vw,15px);line-height:1.8}.source-details{margin-top:12px;max-width:650px}.source-details summary{cursor:pointer;color:#CDEBEA;font-size:14px;font-weight:600;list-style:revert}.source-details .srcs{margin-top:16px}
 @media(prefers-reduced-motion:reduce){#coda .roulette-finale{will-change:auto}}
 
+/* Publication stability: keep the original scene scroll lengths and easing. */
+body::after{display:none!important;content:none!important}
+html.hosted,html.hosted body{scroll-behavior:auto!important;scroll-snap-type:none!important;overflow-anchor:none!important}
+html.xf main>.act+.act{margin-top:calc(-100svh - var(--xb))}
+:root{--xb:20svh}
+html.xf main>.act>.xs{visibility:visible!important;contain:paint}
+/* The static grain and a full-screen blur used to make the sticky scenes shimmer while scrolling. */
 /* Editorial coda & cover refinements — existing scene durations unchanged */
 #cover .cover-wrap{max-width:960px}
 #cover .title b{font:inherit;font-weight:inherit;letter-spacing:inherit;color:#7CC3C2;text-shadow:0 0 10px rgba(124,195,194,.42),0 0 27px rgba(124,195,194,.22)}
@@ -761,16 +768,16 @@ body::after{display:none!important}
 <div class="scrim heavy"></div>
 <div class="beat lower" data-band="0.03,0.32">
 
-<p class="line">회사원 A씨는 굴을<br>좋아했다.</p>
-<p class="note">겨울이면 생굴에 굴젓까지 곁들여 먹곤 했다.</p>
+<p class="line">회사원 A씨는 겨울마다<br>생굴을 찾았다.</p>
+<p class="note">굴젓도 즐겨 먹었다.</p>
 </div>
 <div class="beat lower" data-band="0.38,0.64">
-<p class="line">생굴을 먹고 다섯 번이나<br>몸이 아팠다.</p>
-<p class="note">그 뒤로는 생굴을 먹지 않는다.</p>
+<p class="line">생굴을 먹은 뒤 몸이 아팠던 적이<br>다섯 번 있었다.</p>
+<p class="note">결국 생굴을 끊었다.</p>
 </div>
 <div class="beat lower" data-band="0.70,0.97">
-<p class="line">두세 명이 같은 굴을 나눠 먹었는데<br>A씨만 아팠던 날도 있었다.</p>
-<p class="note">같은 굴을 먹었는데 왜 증상이 달랐을까.</p>
+<p class="line">두세 명이 같은 상에서 굴을 먹었는데<br>A씨만 탈이 난 날도 있었다.</p>
+<p class="note">같은 음식을 먹고도 왜 결과는 달랐을까.</p>
 </div>
 </div>
 </section>
@@ -784,20 +791,20 @@ body::after{display:none!important}
 <div class="beat centre" data-band="0.02,0.30" data-rev="1400">
 <p class="kicker">질병관리청 집계</p>
 <p class="fig"><span data-c="0,8731,0.03,0.12,comma">0</span><small>건</small></p>
-<p class="figcap">지난해 노로바이러스 감염증 신고 건수</p>
+<p class="figcap">2025년 노로바이러스 감염증 표본감시 신고 건수</p>
 <div class="chart" id="chart"></div>
-<p class="figsub">전년(6,766건)보다 29% 많다. 2022년 4,673건, 2023년 5,926건으로 최근 4년 내내 늘었다.</p>
+<p class="figsub">2024년(6,766건)보다 29.0% 늘었다. 2022년 4,673건, 2023년 5,926건에 이어 4년 연속 증가했다.</p>
 </div>
 <div class="beat centre" data-band="0.36,0.62" data-rev="1300">
 <p class="kicker">유행 시기</p>
-<p class="line">환자는 11월부터 늘어<br>이듬해 4월까지 이어진다.</p>
+<p class="line">노로바이러스 감염은 11월부터 늘어<br>이듬해 봄까지 이어진다.</p>
 <div class="dial" id="dial"></div>
-<p class="figsub">12월과 1월에 가장 많다.</p>
+<p class="figsub">겨울철 환자 발생이 두드러진다.</p>
 </div>
 <div class="beat lower" data-band="0.70,0.97">
 <p class="kicker">제철</p>
-<p class="line">굴 철도<br>이 무렵 시작된다.</p>
-<p class="note">겨울은 생굴 소비가 늘어나는 계절이다. 노로바이러스 감염이 늘어나는 시기와도 겹친다.</p>
+<p class="line">생굴이 식탁에 자주 오르는<br>계절과 겹친다.</p>
+<p class="note">다만 노로바이러스는 굴뿐 아니라 오염된 물과 음식, 사람 간 접촉으로도 옮는다.</p>
 </div>
 </div>
 </section>
@@ -816,22 +823,22 @@ body::after{display:none!important}
 <p class="readout" data-ro="0.22,0.68">굴 한 개 · 하루 <b id="fL">0</b>L<span>다 자란 굴 기준 최대치</span><i class="tub"><i id="tubF"></i></i></p>
 <div class="beat lower" data-band="0.02,0.20">
 <p class="kicker">바닷속으로 · 여과 섭식</p>
-<p class="line">굴은 바닷물을 빨아들여<br>먹이를 걸러 낸다.</p>
-<p class="note">바닷물이 아가미를 지나는 동안 플랑크톤과 유기물이 걸러진다. 굴은 걸러 낸 먹이를 먹는다.</p>
+<p class="line">굴은 바닷물을 들이마시며<br>먹이를 걸러 낸다.</p>
+<p class="note">아가미를 통과하는 물에서 플랑크톤과 유기물을 붙잡아 먹는다.</p>
 </div>
 <div class="beat lower" data-band="0.24,0.44">
 <p class="line">다 자란 굴 한 개가<br>하루 최대 <em>190L</em>를 거른다.</p>
-<p class="note">미국 해양대기청(NOAA) 자료다. 가정용 욕조를 한 번 채울 만한 양이다.</p>
+<p class="note">미국 해양대기청(NOAA)이 제시한 최대치다. 실제 여과량은 환경에 따라 달라진다.</p>
 </div>
 <div class="beat lower" data-band="0.48,0.68">
 <p class="kicker noro">축적</p>
-<p class="line">바닷물에 노로바이러스가 있다면<br>굴의 몸속에도 쌓일 수 있다.</p>
-<p class="note">노로바이러스는 굴의 소화기관 조직에 축적될 수 있다. 굴은 감염돼도 겉모습이나 냄새가 달라지지 않는다.</p>
+<p class="line">바닷물에 섞인 노로바이러스도<br>굴의 몸속에 쌓일 수 있다.</p>
+<p class="note">바이러스는 굴의 소화샘 등 조직에 축적될 수 있다. 오염됐더라도 겉모습이나 냄새만으로 알아채기 어렵다.</p>
 </div>
 <div class="beat lower origin-reveal" data-band="0.72,0.98">
-<p class="kicker noro">그 바이러스는 어디에서 왔을까</p>
-<p class="line">굴 속 바이러스의 출발점은<br><em class="fecal">사람의 분변</em>일 수 있다.</p>
-<p class="note">감염자가 배출한 분변의 노로바이러스가 하수를 타고 바다에 흘러들면, 굴은 그 물을 걸러 먹으며 바이러스를 몸속에 쌓을 수 있다. 그 굴을 날로 먹은 사람이 다시 감염되는 것이다. 물론 모든 굴이 오염된 것은 아니다.</p>
+<p class="kicker noro">바닷물 속 바이러스의 출처</p>
+<p class="line">굴 속 노로바이러스의 출발점은<br><em class="fecal">사람의 분변</em>일 수 있다.</p>
+<p class="note">감염자의 분변에 섞인 바이러스가 하수 등을 거쳐 양식 해역으로 들어갈 수 있다. 굴은 오염된 물을 거르면서 바이러스를 축적하고, 이를 날로 먹은 사람은 다시 감염될 수 있다. 모든 굴이 오염됐다는 뜻은 아니다.</p>
 </div>
 
 </div>
@@ -846,18 +853,18 @@ body::after{display:none!important}
 
 <div class="scrim bottom" style="z-index:4"></div>
 <div class="beat lower" data-band="0.02,0.30">
-<p class="kicker">첫 번째 단서 · 그날의 밥상</p>
+<p class="kicker">그날의 밥상</p>
 <p class="line">상에는 생굴 한 접시와<br>굴젓이 올랐다.</p>
-<p class="note">굴젓도 익히지 않은 생굴로 담근다.</p>
+<p class="note">굴젓도 생굴을 소금에 절여 만드는 음식이다.</p>
 </div>
 <div class="beat lower" data-band="0.36,0.64">
 
-<p class="line">한 접시에 담긴 굴도<br>바이러스 양은 제각각일 수 있다.</p>
-<p class="note">영국 식품기준청(FSA)에 따르면 같은 배치에서 나온 굴도 검사 결과가 서로 다를 수 있다. 누가 어떤 굴을 얼마나 먹었는지에 따라 노출된 바이러스 양이 달라질 수 있다는 뜻이다.</p>
+<p class="line">같은 접시에 담긴 굴도<br>바이러스 양은 서로 다를 수 있다.</p>
+<p class="note">개별 굴의 바이러스 양을 조사한 연구에서도 같은 생산지의 굴 사이에 차이가 확인됐다. 어느 굴을 얼마나 먹었는지에 따라 바이러스에 노출된 양이 달라질 수 있다.</p>
 </div>
 <div class="beat lower" data-band="0.70,0.98">
-<p class="line">하지만 바이러스에 얼마나 노출됐는지만으로<br>누가 아플지는 알 수 없다.</p>
-<p class="note">사람마다 노로바이러스에 취약한 정도가 다르기 때문이다.</p>
+<p class="line">먹은 양만으로<br>누가 아플지 단정할 수도 없다.</p>
+<p class="note">바이러스의 양뿐 아니라 각자의 유전적 특성도 감염에 영향을 준다.</p>
 </div>
 
 </div>
@@ -881,28 +888,28 @@ body::after{display:none!important}
 </div>
 <div class="scrim bottom" style="z-index:4"></div>
 <div class="beat lower" data-band="0.02,0.18">
-<p class="kicker noro">두 번째 단서 · 장 세포</p>
-<p class="line">노로바이러스가 장에 도착하면<br>세포 표면의 특정 당 성분과 결합할 수 있다.</p>
-<p class="note">장 세포 표면에는 혈액형과 관련된 당 성분(항원)이 있다. 일부 노로바이러스는 이 항원과 결합해 감염을 일으키는 데 도움을 받는다. 모든 유형이 똑같이 결합하는 것은 아니다.</p>
+<p class="kicker noro">장 점막에서 일어나는 일</p>
+<p class="line">일부 노로바이러스는<br>장 점막의 특정 당 성분에 달라붙는다.</p>
+<p class="note">장 점막에 있는 혈액형 관련 당 항원은 일부 노로바이러스가 결합하는 자리다. 그러나 바이러스 유형에 따라 이용하는 항원이 다르다.</p>
 </div>
 <div class="beat lower" data-band="0.22,0.40">
 <p class="kicker">유전자</p>
-<p class="line">사람에 따라 장 점막에 있는<br>항원의 종류도 다르다.</p>
-<p class="note">FUT2라는 유전자가 제대로 작동하지 않는 사람을 ‘비분비형’이라고 한다. 비분비형은 장 점막에 일부 노로바이러스가 달라붙는 데 이용하는 특정 항원이 나타나지 않는다. 그래서 흔한 GII.4형을 포함한 여러 유형에 상대적으로 잘 감염되지 않는다. 미국 질병통제예방센터(CDC)도 유전적 차이가 감염 위험에 영향을 준다고 설명한다.</p>
+<p class="line">이 차이를 가르는 유전자 중<br>하나가 FUT2다.</p>
+<p class="note">FUT2 유전자가 기능하지 않으면 장 점막에 특정 당 항원이 나타나지 않는다. 이런 사람을 ‘비분비형’이라고 한다. GII.4형을 비롯한 여러 노로바이러스 유형에 상대적으로 저항성이 있는 것으로 알려졌다.</p>
 </div>
 <div class="beat lower" data-band="0.44,0.58">
-<p class="line">비분비형이라고 해서<br>노로바이러스에 모두 안전한 것은 아니다.</p>
-<p class="note">비분비형이어도 감염될 수 있는 노로바이러스 유형이 있다. 비분비형은 국외 연구에서 인구의 5분의 1 안팎으로 보고되지만, 실제 비율은 인구 집단마다 크게 다르다. 혈액형에 따라 감염 양상이 다르다는 관찰 연구도 있다.</p>
+<p class="line">그렇다고 비분비형이<br>모든 노로바이러스에 강한 것은 아니다.</p>
+<p class="note">비분비형도 감염시키는 유형이 있다. 해외 연구에서는 비분비형이 인구의 5분의 1 안팎으로 보고되기도 하지만, 비율은 집단마다 다르다. 혈액형이나 유전자만으로 개인의 감염 여부를 예측할 수는 없다.</p>
 </div>
 <div class="beat lower" data-band="0.62,0.78">
 <p class="kicker">다섯 번</p>
-<p class="line">같은 사람이 노로바이러스에<br>여러 번 감염될 수 있다.</p>
-<p class="note">노로바이러스에는 여러 유형이 있다. 한 번 앓았다고 다른 유형까지 막을 수 있는 것은 아니다. 감염 뒤 생긴 면역이 얼마나 오래가는지도 확실하지 않다(CDC).</p>
+<p class="line">한 번 앓았어도<br>다시 걸릴 수 있다.</p>
+<p class="note">노로바이러스는 유형이 다양하다. 한 유형에 감염됐다고 다른 유형까지 막을 수 있는 것은 아니다. 감염 후 면역이 얼마나 지속되는지도 아직 분명하지 않다(CDC).</p>
 </div>
 <div class="beat lower" data-band="0.82,0.98">
 <p class="kicker">증상 없는 감염</p>
-<p class="line">무증상 감염자도<br>노로바이러스를 배출한다.</p>
-<p class="note">CDC 연구진은 노로바이러스 감염 중 약 7%가 증상 없이 지나가는 것으로 추정했다. 증상이 없는 사람도 바이러스를 배출해 다른 사람에게 옮길 수 있다.</p>
+<p class="line">아프지 않은 사람도<br>바이러스를 옮길 수 있다.</p>
+<p class="note">2018년 81개 연구를 분석한 메타분석에서 증상이 없는 조사 대상자의 노로바이러스 검출률은 평균 7%였다. 겉으로 멀쩡해도 바이러스를 배출할 수 있다는 뜻이다.</p>
 </div>
 
 </div>
@@ -923,20 +930,20 @@ body::after{display:none!important}
 </div>
 <div class="beat lower" data-band="0.02,0.18">
 <p class="kicker">몸속의 시간 · 잠복기</p>
-<p class="line">저녁 7시에<br>생굴을 먹었다고 하자.</p>
+<p class="line">저녁 7시에<br>생굴을 먹었다고 가정해 보자.</p>
 </div>
 <div class="beat lower" data-band="0.22,0.46">
-<p class="line">12~48시간 동안은<br>별다른 증상이 없다.</p>
-<p class="note">몸 안에 바이러스가 들어와 증상이 나타나기까지의 잠복기다.</p>
+<p class="line">증상은 보통<br>12~48시간 뒤 나타난다.</p>
+<p class="note">바이러스에 노출된 뒤 증상이 시작되기까지의 시간, 곧 잠복기다.</p>
 </div>
 <div class="beat lower" data-band="0.52,0.72">
 <p class="kicker">증상</p>
-<p class="line">구토와 설사가<br>갑자기 시작된다.</p>
-<p class="note">복통과 메스꺼움이 따르고, 열이 나거나 두통·근육통을 겪기도 한다.</p>
+<p class="line">구토나 설사가<br>갑자기 시작될 수 있다.</p>
+<p class="note">복통과 메스꺼움이 함께 오기도 한다. 열이 나거나 머리와 근육이 아픈 경우도 있다.</p>
 </div>
 <div class="beat lower" data-band="0.78,0.98">
 <p class="line">대부분 1~3일 안에<br>회복한다.</p>
-<p class="note">구토와 설사가 반복되면 탈수가 올 수 있다. 어린이와 고령자, 면역력이 약한 사람은 증상이 더 심할 수 있다.</p>
+<p class="note">문제는 탈수다. 특히 어린이와 고령자, 면역력이 약한 사람은 심해질 수 있어 주의해야 한다.</p>
 </div>
 </div>
 </section>
@@ -952,18 +959,18 @@ body::after{display:none!important}
 <p class="fig mid"><span data-c="0,6,0.03,0.12,int">0</span><small>차례</small></p>
 <p class="figcap">미국으로 수출된 냉동 굴에서 노로바이러스가 검출돼<br>폐기·리콜된 횟수(2024~2025년)</p>
 <div class="route" id="route"></div>
-<p class="figsub export-caption">모두 국내 수출검사를 통과한 물량이었다. 미국은 노로바이러스가 검출되면 회수 조치한다.<span class="export-source">자료: 신장식 의원실·해양수산부·국립수산물품질관리원</span></p>
+<p class="figsub export-caption">6차례 모두 국내 수출검사에서 적합 판정을 받은 냉동 굴이었다. 현지에서 폐기되거나 리콜됐다.<span class="export-source">자료: 신장식 의원실·해양수산부·국립수산물품질관리원</span></p>
 </div>
 <div class="beat centre" data-band="0.36,0.62" data-rev="1600">
 <p class="kicker">검사 체계</p>
-<p class="line">선적 직전 완제품 검사는<br>법적 의무가 아니었다.</p>
+<p class="line">선적 직전 완제품의<br>노로바이러스 검사는 의무가 아니다.</p>
 <div class="flow" id="flow"><b><i>1</i>산지 해역 조사</b><b><i>2</i>수출 검사 ‘적합’</b><b class="gap"><i>3</i>선적 전 노로바이러스 검사<em>의무 아님</em></b><b class="bad"><i>4</i>미국 검역서 검출</b></div>
-<p class="figsub">선적 직전 완제품의 노로바이러스 검사는 법적 의무가 아니다. 국내 기준에는 생식용 굴의 노로바이러스 항목이 따로 없고, 감염 우려 해역의 굴에 ‘가열조리용’ 표시를 붙여 관리한다.</p>
+<p class="figsub">생식용 굴의 식품 기준에 노로바이러스 검사항목이 별도로 없고, 정부는 감염 우려 해역과 ‘가열조리용’ 표시 등을 관리한다. 시중 제품에 대한 별도 수거·검사는 시행하고 있다.</p>
 </div>
 <div class="beat lower" data-band="0.70,0.98">
 <p class="kicker">산지</p>
 <p class="line">굴은 한국의 대표<br>수출 수산물이다.</p>
-<p class="note">한국은 세계 2위 굴 생산국이고, 굴은 수산물 수출 5위 품목이다. 국회에선 산지 해역 관리와 수출 전 검사를 함께 보완해야 한다는 지적이 나왔다. 식약처는 내년 2월까지 시중 생식용 굴을 거둬 노로바이러스를 검사한다.</p>
+<p class="note">한국은 세계 2위 굴 생산국이다. 국회에서는 생산 해역의 오염원 관리와 수출 전 검사를 강화해야 한다는 지적이 나왔다. 식약처는 2027년 2월 26일까지 생식용 굴을 포함한 겨울철 수산물 720건을 수거해 검사할 계획이다.</p>
 </div>
 
 </div>
@@ -978,17 +985,17 @@ body::after{display:none!important}
 <div class="beat centre" data-band="0.02,0.62">
 <h2 class="myth-main-title">흔한 오해</h2>
 <div class="myths" id="myths">
-<div class="my"><s>레몬즙을 뿌리면 괜찮다</s><span>산으로는 굴 속 바이러스가 죽지 않는다.</span></div>
-<div class="my"><s>초장에 찍어 먹으면 괜찮다</s><span>양념도 마찬가지다.</span></div>
-<div class="my"><s>소주와 함께 먹으면 안전하다</s><span>소주를 마셔도 굴에 있는 노로바이러스는 제거되지 않는다.</span></div>
-<div class="my"><s>냄새가 안 나면 싱싱하고 안전하다</s><span>오염된 굴도 보기·냄새·맛이 정상일 수 있다(FDA).</span></div>
-<div class="my"><s>손 소독제면 충분하다</s><span>알코올 소독제는 노로바이러스에 잘 듣지 않는다. 비누로 흐르는 물에 30초 이상 씻는다(식약처).</span></div>
+<div class="my"><s>레몬즙을 뿌리면 괜찮다</s><span>레몬즙만으로 노로바이러스를 없앨 수는 없다.</span></div>
+<div class="my"><s>초장에 찍어 먹으면 괜찮다</s><span>초장도 바이러스를 없애지 못한다.</span></div>
+<div class="my"><s>소주와 함께 먹으면 안전하다</s><span>소주를 곁들인다고 굴 속 바이러스가 사라지지는 않는다.</span></div>
+<div class="my"><s>냄새가 안 나면 싱싱하고 안전하다</s><span>바이러스에 오염돼도 생김새·냄새·맛이 멀쩡할 수 있다(FDA).</span></div>
+<div class="my"><s>손 소독제면 충분하다</s><span>손 소독제만으로는 충분하지 않다. 비누로 30초 이상 씻고 흐르는 물에 헹궈야 한다(식약처).</span></div>
 </div>
 </div>
 <div class="beat lower" data-band="0.68,0.98">
 <p class="kicker">비브리오균</p>
 <p class="line">생굴에는<br>비브리오균도 있을 수 있다.</p>
-<p class="note">연안 바닷물에 사는 세균으로 굴에 쌓인다. 비브리오 불니피쿠스균은 혈류로 침투해 패혈증을 일으킬 수 있다. CDC는 이 균 감염자 5명 중 1명꼴로 숨진다고 밝혔다.</p>
+<p class="note">비브리오균은 연안 바닷물에 자연적으로 사는 세균이다. 그중 비브리오 불니피쿠스균은 패혈증을 일으킬 수 있다. 미국 CDC에 따르면 이 균 감염자의 약 20%가 숨진다. 노로바이러스와는 다른 위험이다.</p>
 </div>
 </div>
 </section>
@@ -1005,7 +1012,7 @@ body::after{display:none!important}
 <p class="kicker warm">CDC 기준 · 껍데기 벗긴 굴</p>
 <p class="cookM">끓는 물에서 최소 3분</p>
 <div class="gauge"></div>
-<p class="figsub">노로바이러스와 비브리오균은 열에 약하다. 충분히 익히는 게 가장 확실한 예방법이다.</p>
+<p class="figsub">미국 CDC는 껍데기를 벗긴 굴을 이처럼 충분히 가열하라고 권고한다.</p>
 </div>
 <div class="beat centre cookB" data-band="0.30,0.50" data-rev="1800" data-temp="190" data-min="3">
 <p class="kicker warm">튀길 때</p>
@@ -1022,7 +1029,7 @@ body::after{display:none!important}
 <div class="pkg" aria-hidden="true"><span class="pkgName">굴</span><span class="pkgW">150g</span><span class="pkgTag">가열조리용</span><span class="pkgNote">익혀서 드세요</span></div>
 <p class="fig warm mid">85<small>℃</small><small> · </small>1<small>분</small></p>
 <p class="figcap">포장에 ‘가열조리용’이나 ‘익혀 먹는’이 적힌 굴은<br>중심 온도 85℃ 이상에서 1분 이상 익혀야 한다</p>
-<p class="figsub">날로 먹는 용도가 아니라는 표시다.</p>
+<p class="figsub">‘가열조리용’ 표시는 날로 먹지 말라는 뜻이다.</p>
 </div>
 </div>
 </section>
@@ -1040,7 +1047,7 @@ body::after{display:none!important}
 </div>
 <div class="beat lower" data-band="0.40,0.66">
 <p class="line">벌어진 뒤에도<br><em class="warm">3~5분</em> 더 끓인다.</p>
-<p class="note">껍데기가 열렸다고 속까지 다 익은 것은 아니다.</p>
+<p class="note">껍데기가 벌어져도 속까지 익히는 시간이 더 필요하다.</p>
 </div>
 <div class="beat lower" data-band="0.70,0.99">
 <p class="line">끝까지 열리지 않는 굴은<br>버린다.</p>
@@ -1056,7 +1063,7 @@ body::after{display:none!important}
 <div class="scrim side"></div>
 <div class="beat lower" data-band="0.02,0.74" style="max-width:min(760px,90vw)">
 <p class="kicker">조리 위생</p>
-<p class="line">생굴을 손질하는 과정에서도<br>바이러스가 전파될 수 있다.</p>
+<p class="line">생굴을 손질한 손과 도마도<br>오염 경로가 될 수 있다.</p>
 <ul class="chk" id="chkList">
 <li><i aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h9a4 4 0 0 1 4 4v1"/><path d="M4 5v6M9 8V4M6 4h6"/><path d="M17 17v1M15 20v1M19 20v1"/></svg><span>생굴을 만진 뒤엔 비누로 흐르는 물에 30초 이상 손 씻기</span></li>
 <li><i aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="12" width="18" height="8" rx="2"/><path d="M6 10 18 3l1 2-9 6"/></svg><span>칼·도마는 바로 씻고, 날것과 익힌 음식용을 나눠 쓰기</span></li>
@@ -1065,8 +1072,8 @@ body::after{display:none!important}
 </ul>
 </div>
 <div class="beat lower" data-band="0.80,0.99">
-<p class="line">음식보다 사람을 통한<br>전파가 더 많았다.</p>
-<p class="note">질병관리청 잠정 분석에서 지난해 원인과 경로가 확인된 노로바이러스 집단발생 102건 가운데 63건(61.8%)이 사람 간 전파였다. 이 중 45건이 어린이집과 유치원에서 났다.</p>
+<p class="line">경로가 확인된 집단발생에서는<br>사람 간 전파가 더 많았다.</p>
+<p class="note">질병관리청 잠정 집계에서 2025년 감염경로가 확인된 노로바이러스 집단발생 102건 가운데 63건(61.8%)이 사람 간 전파였다. 그중 45건은 어린이집과 유치원에서 발생했다.</p>
 </div>
 </div>
 </section>
@@ -1079,13 +1086,13 @@ body::after{display:none!important}
 <div class="scrim heavy"></div>
 <div class="coda-photo-label" id="codaPhotoLabel" aria-hidden="true">생굴</div><div class="roulette-finale" id="rouletteFinale" aria-hidden="true"><div class="rf-dial"><div class="rf-rim"><span class="rf-tick t0"></span><span class="rf-tick t1"></span><span class="rf-tick t2"></span><span class="rf-tick t3"></span><span class="rf-tick t4"></span><span class="rf-tick t5"></span><div class="rf-food"><img src="./oyster-cutout.webp" alt=""/><img src="./oyster-cutout.webp" alt=""/><img src="./oyster-cutout.webp" alt=""/><img src="./oyster-cutout.webp" alt=""/><img src="./oyster-cutout.webp" alt=""/><img src="./oyster-cutout.webp" alt=""/></div><span class="rf-center"></span></div></div></div>
 <div class="beat lower" data-band="0.03,0.42">
-<p class="line">생굴을 먹는 것보다<br>충분히 익혀 먹는 편이 안전하다.</p>
-<p class="note">식약처는 굴국밥이나 굴전처럼 가열한 요리로 먹기를 권한다.</p>
+<p class="line">식탁에서 위험을 줄이는 방법은<br>굴을 충분히 익히는 것이다.</p>
+<p class="note">식약처도 생굴은 가열해 먹도록 권고한다.</p>
 </div>
 <div class="beat centre" data-band="0.50,0.97">
 
 <p class="line">A씨는 지금도<br>생굴을 먹지 않는다.</p>
-<p class="note">굴을 먹고 싶다면 충분히 익히는 편이 안전하다.</p>
+<p class="note">굴의 오염 여부는 눈으로 구별하기 어렵기 때문이다.</p>
 </div>
 </div>
 </section>
@@ -1096,19 +1103,19 @@ body::after{display:none!important}
 <div class="credits">
 <div class="imgnote"><h2>제작 안내</h2><p>사진은 생성형 AI로 만든 재현 이미지입니다. 굴·장 세포·오염량 그래픽은 이해를 돕기 위한 모식도이며 실제 측정 결과가 아닙니다. 배경음은 합성음입니다.</p></div><div class="imgnote">
 <h2>계산과 가정</h2>
-<p>29%는 지난해 신고 8,731건을 전년 6,766건과 비교한 값(29.0%)입니다. 190L는 미국 해양대기청(NOAA)의 ‘다 자란 굴 한 개가 하루 최대 50갤런’을 리터로 바꾼 값(약 189L)이고, 욕조 비교는 단순 비교입니다. 식탁의 인원·자리와 굴별 분홍 표시는 설명을 위한 가정입니다. 잠복기 시간표는 저녁 7시에 먹었다고 가정했습니다. 190℃와 230℃는 CDC가 제시한 375°F와 450°F를 섭씨로 바꾼 근삿값입니다.</p>
+<p>29.0%는 2025년 표본감시 신고 8,731건을 2024년 6,766건과 비교한 값입니다. 이 수치는 전체 국민의 실제 감염자 수가 아닙니다. 190L는 미국 해양대기청(NOAA)의 ‘다 자란 굴 한 개가 하루 최대 50갤런’을 리터로 바꾼 값(약 189L)이고, 욕조 비교는 단순 비교입니다. 식탁의 인원·자리와 굴별 분홍 표시는 설명을 위한 가정입니다. 잠복기 시간표는 저녁 7시에 먹었다고 가정했습니다. 190℃와 230℃는 CDC가 제시한 375°F와 450°F를 섭씨로 바꾼 근삿값입니다.</p>
 </div>
 <div class="imgnote"><h2>자료·출처</h2><div class="source-summary"><p>주요 자료: 질병관리청·식품의약품안전처·해양수산부·NOAA·FSA·CDC 및 관련 연구 논문.</p><details class="source-details"><summary>자료별 출처 자세히 보기</summary><ul class="srcs">
 <li>노로바이러스 감염증 신고 건수·유행 시기·증상: 질병관리청</li>
 <li>노로바이러스 집단발생 전파 경로: 질병관리청, 2025년 수인성·식품매개감염병 집단발생 분석(잠정)</li>
 <li>수출 냉동 굴의 미국 폐기·리콜(2024~2025)과 선적 전 검사: 신장식 조국혁신당 의원실, 해양수산부·국립수산물품질관리원 자료(2026)</li>
 <li>가열조리용 표시와 중심 85℃·1분, 손 씻기 30초, 생식용 굴 수거 검사: 식품의약품안전처</li>
-<li>굴 개체마다 다른 바이러스 양: 영국 식품기준청(FSA) 위해평가(2023)</li>
+<li>굴 개체별 바이러스량 차이: 『International Journal of Food Microbiology』(2020), FSA 위해평가(2023)</li>
 <li>비분비형과 노로바이러스 저항성: Nordgren·Svensson, 『Viruses』(2019)</li>
 <li>혈액형과 감수성: Bai 외, 『Frontiers in Microbiology』(2023)</li>
 <li>비분비형 비율: FUT2 유전형과 장내 미생물에 관한 2024년 연구</li>
 <li>바이러스 유형과 면역, 유전자와 감수성, 굴 조리 기준, 비브리오 불니피쿠스 치명률: 미국 질병통제예방센터(CDC)</li>
-<li>증상 없는 감염 비율: CDC 연구진 리뷰(2018년 메타분석 인용)</li>
+<li>증상 없는 사람의 바이러스 검출률: 『EClinicalMedicine』 메타분석(2018, 81개 연구)</li>
 <li>오염된 굴의 겉모습·냄새·맛: 미국 식품의약국(FDA, 2025)</li>
 <li>굴의 하루 여과량: 미국 해양대기청(NOAA)</li>
 <li>분변 유래 노로바이러스의 하수·굴 오염: 영국 식품기준청(FSA, 2023), 미국 질병통제예방센터(CDC, 2012), 캐나다 공중보건청(2018)</li>
@@ -1183,38 +1190,49 @@ const sceneIds=["cover","intro","numbers","filter","tbl","why","clock","usa","my
 const onCover=()=>{const e=document.getElementById("cover");if(!e)return false;const r=e.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4;};
 function hintState(){const show=on&&!unlocked&&onCover();hint.classList.toggle("show",show);hint.setAttribute("aria-hidden",String(!show));}
 function findScene(){
- let winner="cover",score=-Infinity;
- for(let i=0;i<sceneIds.length;i++){const id=sceneIds[i],el=document.getElementById(id);if(!el)continue;const r=el.getBoundingClientRect();
- if(r.bottom<=innerHeight*.43||r.top>=innerHeight*.57)continue;
- const stage=el.querySelector(".stage")||el;const op=parseFloat(getComputedStyle(stage).opacity)||0;
- const s=op*100+i*.018+(id===scene?.2:0);if(s>score){winner=id;score=s;}}
+ let winner="cover";
+ for(let i=0;i<sceneIds.length;i++){
+  const id=sceneIds[i],el=document.getElementById(id);if(!el)continue;
+  const r=el.getBoundingClientRect();
+  if(r.bottom<=innerHeight*.43||r.top>=innerHeight*.57)continue;
+  const stage=el.querySelector(".stage")||el;
+  const op=stage.classList.contains("xs")?clampSound(Number(stage.style.opacity)||0):1;
+  // During overlap, prefer the incoming scene once it becomes visually dominant.
+  // Comparing computed opacity previously let the OLD sea scene keep playing until the very end.
+  if(op>=.35)winner=id;
+ }
  return winner;
 }
 function progress(id){const el=document.getElementById(id);if(!el)return 0;const r=el.getBoundingClientRect(),vh=innerHeight,extra=(Number(el.dataset.transitionExtra)||0)*vh/100;return clampSound(-r.top/Math.max(1,r.height-vh-extra));}
 function play(k){const a=players[k];if(!on||!unlocked||document.hidden||!a)return;const p=a.play();if(p&&p.catch)p.catch(()=>{if(onCover()){hint.textContent="화면을 클릭하면 소리가 납니다";hint.classList.add("show");}});}
 function stopAll(){Object.values(players).forEach(a=>{a.pause();a.volume=0;});}
-function fade(k,target){const a=players[k],d=target-a.volume;const v=clampSound(a.volume+Math.sign(d)*Math.min(Math.abs(d),.012));a.volume=v;if(v>.005&&a.paused)play(k);else if(v<.006&&!a.paused)a.pause();}
+function fade(k,target){const a=players[k],d=target-a.volume;const v=clampSound(a.volume+Math.sign(d)*Math.min(Math.abs(d),d>0?.045:.034));a.volume=v;if(v>.005&&a.paused)play(k);else if(v<.006&&!a.paused)a.pause();}
 function oneShot(k,volume){const a=players[k];a.pause();a.currentTime=0;a.volume=clampSound(volume);play(k);}
 function refresh(){
  if(!on||!unlocked||document.hidden)return;
  const id=findScene(),p=id==="filter"?progress("filter"):0;scene=id;
- // The surf is no longer the soundtrack everywhere: only marine scenes carry it, quietly.
- const sea=id==="cover"?.18:id==="numbers"?.08:id==="filter"?(p>=.69?.025:.19):0;
- const pulse=id==="why"?.28:id==="clock"?.19:id==="usa"?.13:id==="myth"?.08:id==="filter"&&p>.69?.16:id==="tbl"?.045:.018;
- const cook=id==="heat"?.19:id==="pot"?.30:id==="kitchen"?.24:id==="coda"?.095:0;
- fade("sea",sea);fade("pulse",pulse);fade("cook",cook);
+ // Waves are a low, short ambient accent, NOT the soundtrack for the whole article.
+ // Preserve the original scene order and speed; fade out before the sewage reveal.
+ const sea=id==="cover"?.036:id==="filter"?.074*(1-(p<=.40?0:p>=.66?1:((p-.40)/.26)**2*(3-2*((p-.40)/.26)))):0;
+ const pulse=id==="why"?.30:id==="clock"?.22:id==="usa"?.17:id==="myth"?.14:id==="filter"&&p>.64?.23:0;
+ const cook=id==="heat"?.25:id==="pot"?.34:id==="kitchen"?.28:id==="coda"?.13:0;
+ const speaking=!players.table.paused||!players.source.paused;
+ // Let the one-shot sounds (soju pour and fecal-water reveal) come forward.
+ fade("sea",speaking?sea*.32:sea);
+ fade("pulse",speaking?pulse*.38:pulse);
+ fade("cook",speaking?cook*.32:cook);
  // At the dinner table a one-time, deliberate pour / glass clink / satisfied sip.
- if(id==="tbl"&&lastTable!==id&&Date.now()-lastTableAt>9000){lastTableAt=Date.now();oneShot("table",.66);}
+ if(id==="tbl"&&lastTable!==id&&Date.now()-lastTableAt>9000){lastTableAt=Date.now();oneShot("table",.82);}
  if(id==="tbl"||lastTable){lastTable=id==="tbl"?id:"";}
- if(id!=="tbl"&&!players.table.paused){const a=players.table;a.volume=Math.max(0,a.volume-.025);if(a.volume<.02)a.pause();}
+ if(id!=="tbl"&&!players.table.paused){const a=players.table;a.volume=Math.max(0,a.volume-.115);if(a.volume<.02)a.pause();}
  // On the 'human waste' reveal: one dark water-flow cue, not a recurring jingle.
- if(id==="filter"&&p>.715&&!sourcePlayed&&Date.now()-lastSourceAt>8000){sourcePlayed=true;lastSourceAt=Date.now();oneShot("source",.36);}
+ if(id==="filter"&&p>.715&&!sourcePlayed&&Date.now()-lastSourceAt>8000){sourcePlayed=true;lastSourceAt=Date.now();oneShot("source",.64);}
  if(id!=="filter"||p<.25)sourcePlayed=false;
- if(id!=="filter"&&!players.source.paused){const a=players.source;a.volume=Math.max(0,a.volume-.02);if(a.volume<.02)a.pause();}
+ if(id!=="filter"&&!players.source.paused){const a=players.source;a.volume=Math.max(0,a.volume-.10);if(a.volume<.02)a.pause();}
  $$(".bars i",btn).forEach((b,k)=>b.style.setProperty("--g",(.21+.48*Math.abs(Math.sin(performance.now()/410+k*1.1))).toFixed(2)));
 }
 function ui(){btn.setAttribute("aria-checked",String(on));btn.classList.toggle("on",on);btn.classList.toggle("armed",on&&!unlocked);st.textContent=on?"ON":"OFF";hintState();}
-function startLoop(){if(frame)return;frame=setInterval(refresh,90);}
+function startLoop(){if(frame)return;frame=setInterval(refresh,120);}
 function setAudio(enabled){if(on===enabled)return;on=enabled;if(on&&unlocked){lastTable="";refresh();startLoop();}else{clearInterval(frame);frame=0;stopAll();}ui();}
 function unlock(){if(unlocked||!on)return;unlocked=true;scene="";refresh();startLoop();ui();}
 // Default ON, but real playback is unlocked by an explicit user gesture, as browsers require.
@@ -1638,7 +1656,7 @@ const dt=Math.min(64,now-lastT);lastT=now;const k=1-Math.exp(-dt/TAU),vh=innerHe
 acts.forEach(a=>{
 const r=a.el.getBoundingClientRect(),extra=(Number(a.el.dataset.transitionExtra)||0)*vh/100,span=r.height-vh-extra,pt=span>0?clamp(-r.top/span):0;
 if(r.bottom<-vh*.3||r.top>vh*1.3){a.ps=pt;return;}
-if(a.ps===null||calm||Math.abs(pt-a.ps)>.12)a.ps=pt;
+if(a.ps===null||calm||(!window.__oyHosted&&Math.abs(pt-a.ps)>.12))a.ps=pt;
 a.ps+=(pt-a.ps)*k;if(Math.abs(pt-a.ps)<2e-4)a.ps=pt;else busy=true;
 if(r.top<=vh*.5&&r.bottom>vh*.5&&TEMP[a.el.id]){heat.target=TEMP[a.el.id](a.ps);heat.dT=DENS[a.el.id]??.6;}
 if(render(a,a.ps,now))busy=true;});
@@ -1668,7 +1686,8 @@ if(m[2]==="progress"){const y=Math.max(0,docH()-innerHeight)*clamp(Number(e.data
 else if(m[2]==="requestHeight")notifyHeight(true);
 else if(m[2]==="tap")hostTap(Number(e.data.x)||0,Number(e.data.y)||0);
 else if(m[2]==="shield")setShield(!!e.data.on);});
-addEventListener("scroll",()=>{if(!hostLinked||expectY<0||Math.abs(scrollY-expectY)<=2)return;expectY=scrollY;post("sync",{progress:clamp(scrollY/Math.max(1,docH()-innerHeight))});},{passive:true});
+/* Parent-driven scrolling: never echo scroll position back to the parent.
+   Chapter links explicitly send "goto"; wheel, touch and keys still forward normally. */
 if(EMB){
 addEventListener("wheel",e=>{if(!hostLinked||e.ctrlKey)return;e.preventDefault();post("wheel",{deltaY:e.deltaY,deltaMode:e.deltaMode||0});},{passive:false});
 let ty=null,sx=0,sy=0,intr=false,axis=null,vs=[];
@@ -1705,7 +1724,7 @@ var secs=acts.slice(1).map(function(s){var st=s.firstElementChild;st.classList.a
 acts[0].classList.add('xon');root.classList.add('xf');
 var XB=1,queued=false;
 function measure(){XB=Math.max(1,probe.offsetHeight||innerHeight*.14);}
-function update(){queued=false;secs.forEach(function(x){var top=x.s.getBoundingClientRect().top,o=top>0?0:Math.min(1,-top/XB);x.s.classList.toggle('xon',top<=1);if(o===x.o)return;x.o=o;x.st.style.opacity=o;x.st.style.visibility=o>0?'visible':'hidden';});}
+function update(){queued=false;secs.forEach(function(x){var top=x.s.getBoundingClientRect().top,o=top>0?0:Math.min(1,-top/XB);x.s.classList.toggle('xon',top<=1);if(o===x.o)return;x.o=o;x.st.style.opacity=o.toFixed(4);});}
 function queue(){if(!queued){queued=true;requestAnimationFrame(update);}}
 addEventListener('scroll',queue,{passive:true});addEventListener('resize',function(){measure();queue();},{passive:true});
 var chap=document.getElementById('chap');
