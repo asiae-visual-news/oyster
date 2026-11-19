@@ -22,7 +22,7 @@
 <link rel="preload" as="image" href="./00-cover.jpg" fetchpriority="high">
 <style>
 /* 04편 규칙: 기사 톤, 게임 장치·흔들림 없음. 기자 경험 밖 장면은 지어내지 않는다. 날것=청록, 익힘=호박, 바이러스=연분홍.
-   3D는 '왜 나만' 한 곳. 장면 사이는 밀어 올리지 않는다. 전환은 겹쳐 띄우기 + 물 차오르기(바다)·조리개(왜 나만)·불길(익히기). */
+   3D는 '왜 나만' 한 곳. 장면 사이는 밀어 올리지 않는다. 전환은 겹쳐 띄우기(보간) + 바다만 물 차오르기. 사진이 다 뜬 뒤 글이 나온다. */
 :root{--ink:#07151b;--ink-2:#0e242b;--slate:#91aeb6;--slate-lt:#A9BDC6;--chalk:#f4f8f7;--brine:#96e1df;--flame:#EE9A5C;--noro:#F08DAE;--sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;--serif:"Song Myung","Noto Serif KR",serif;--gut:clamp(20px,5vw,64px);--xb:20svh;--read-col:39ch}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
@@ -56,8 +56,6 @@ img,svg,canvas{display:block;max-width:100%}button{font-family:inherit}::selecti
 .scrim.dim{background:#03080B;opacity:0;z-index:6}
 .xedge{position:absolute;z-index:9;pointer-events:none;opacity:0}
 .xedge.tide{left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(214,248,246,.85) 20%,rgba(255,255,255,.95) 50%,rgba(214,248,246,.85) 80%,transparent);box-shadow:0 0 18px 4px rgba(150,225,223,.45)}
-.xedge.ring{border-radius:50%;border:2px solid rgba(255,214,228,.7);box-shadow:0 0 24px 6px rgba(240,141,174,.28),inset 0 0 24px 6px rgba(240,141,174,.18);transform:translate(-50%,-50%)}
-.xedge.ring.heat{border-color:rgba(255,196,130,.8);box-shadow:0 0 28px 8px rgba(238,154,92,.35),inset 0 0 28px 8px rgba(238,154,92,.2)}
 .beat{position:absolute;pointer-events:none;will-change:opacity,transform;z-index:5}
 .js .beat{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .34s ease}
 .js .beat.past{transform:translateY(-8px)}
@@ -277,14 +275,17 @@ footer{position:relative;z-index:5;background:var(--ink);padding:clamp(46px,8vh,
 .src-go i{display:block;width:26px;height:1px;background:var(--brine);position:relative;transition:width .4s cubic-bezier(.16,1,.3,1)}
 .src-go i::after{content:"";position:absolute;right:0;top:-3.5px;width:8px;height:8px;border-top:1px solid var(--brine);border-right:1px solid var(--brine);transform:rotate(45deg)}
 .rel-card:hover .src-go i{width:42px}
-.seriesMark{margin:clamp(48px,8vh,96px) 0 0;display:flex;justify-content:center;font-weight:800;font-size:min(13vw,132px);line-height:.92;letter-spacing:-.035em;white-space:nowrap;user-select:none;pointer-events:none;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.2px rgba(124,195,194,.44);background:linear-gradient(100deg,transparent 42%,rgba(214,242,240,.42) 50%,transparent 58%) no-repeat,linear-gradient(180deg,rgba(124,195,194,.18),rgba(124,195,194,.03) 85%);background-size:260% 100%,100% 100%;background-position:120% 0,0 0;-webkit-background-clip:text;background-clip:text;opacity:0;transform:translateY(48px);filter:blur(6px);transition:opacity 1.4s cubic-bezier(.2,.7,.3,1),transform 1.6s cubic-bezier(.16,1,.3,1),filter 1.2s}
-.seriesMark.on{opacity:1;transform:none;filter:none;animation:smSweep 2.2s 1.2s cubic-bezier(.4,0,.2,1) both}
+/* 맨 끝 시리즈명: 스크롤에 맞춰 흐릿하게 떠올라 페이지 끝에서 최대 80% 진하기 */
+.seriesMark{margin:clamp(48px,8vh,96px) 0 0;display:flex;justify-content:center;font-weight:800;font-size:min(13vw,132px);line-height:.92;letter-spacing:-.035em;white-space:nowrap;user-select:none;pointer-events:none;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:1px rgba(124,195,194,.3);background:linear-gradient(100deg,transparent 44%,rgba(214,242,240,.22) 50%,transparent 56%) no-repeat,linear-gradient(180deg,rgba(124,195,194,.1),rgba(124,195,194,.015) 85%);background-size:260% 100%,100% 100%;background-position:120% 0,0 0;-webkit-background-clip:text;background-clip:text;opacity:var(--sm,0);transform:translateY(calc((1 - var(--sm,0)) * 36px));filter:blur(calc((1 - var(--sm,0)) * 4px))}
+.seriesMark.on{animation:smSweep 3.6s .6s cubic-bezier(.4,0,.2,1) both}
 @keyframes smSweep{from{background-position:120% 0,0 0}to{background-position:-60% 0,0 0}}
 html.hosted,html.hosted body{touch-action:none!important;overscroll-behavior:none!important;scroll-behavior:auto!important;scroll-snap-type:none!important;overflow-anchor:none!important}
 html.hosted{scrollbar-width:none}html.hosted::-webkit-scrollbar{display:none}
 html.xf main>.act+.act{margin-top:calc(-100vh - var(--xb));margin-top:calc(-100svh - var(--xb))}
 html.xf main>.act:not(.xon){pointer-events:none}
 html.xf main>.act>.xs{opacity:0;contain:paint}
+/* 사진이 다 뜨기 전에는 새 장면의 글을 숨긴다 */
+html.xf main>.act+.act:not(.xopen) .beat,html.xf main>.act+.act:not(.xopen) .readout,html.xf main>.act+.act:not(.xopen) .binding-board{opacity:0!important}
 @media(min-width:1100px) and (min-height:670px){
  #filter .fbox{left:30%;top:50%;transform:translate(-50%,-50%);width:min(53vw,790px,calc((100svh - 160px)*1.613))}
  #filter .loopD{left:30%;top:22%;width:min(51vw,610px)}
@@ -344,7 +345,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
  #coda .beat.centre .line{font-size:clamp(24px,6vw,32px)}#coda .beat.centre .note{max-width:31ch}#coda .rf-tick{display:none}
  .imgnote{grid-template-columns:1fr;gap:14px}.imgnote p,.srcs li{font-size:14.5px}
  .relGrid{grid-template-columns:1fr}
- .seriesMark{font-size:13.6vw;margin-top:52px;-webkit-text-stroke-width:1px}
+ .seriesMark{font-size:13.6vw;margin-top:52px}
 }
 @media(max-width:720px) and (max-height:790px){.beat.lower{bottom:clamp(84px,12.1svh,105px)}}
 @media(max-width:720px) and (min-height:790px){#filter .beat.lower,#tbl .beat.lower,#why .beat.lower,#clock .beat.lower,#pot .beat.lower{top:54%;bottom:auto;max-width:calc(100% - 40px)}}
@@ -352,10 +353,8 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 @media(max-width:720px) and (max-height:720px){.note,.beat.lower .note{font-size:15px;line-height:1.52}.line{font-size:clamp(23px,5.9vw,28px)}#filter .readout{display:none}#why .binding-board{top:54px}#why .binding-card svg{height:32px}#why .w2{top:150px;width:min(70vw,300px)}}
 @media (max-width:720px) and (max-height:700px){.readout span{display:none}.fig{font-size:clamp(44px,13vw,68px)}.gauge{width:min(52vw,30vh)}}
 @media (pointer:coarse),(max-width:720px){.beat,.plate img{will-change:auto!important}}
-@media (prefers-reduced-motion:reduce){#potSvg .fl,#wsurf,#oySvg .flow-dash{animation:none}.plate img{transform:none!important}.title,.deck,.cue{animation:none;opacity:1}.series::before,.series span{animation:none;opacity:1;filter:none}.series span{transform:translateY(-50%) rotate(180deg)}.seriesMark{opacity:1;transform:none;filter:none;animation:none}#filter .diveShot img{will-change:auto;transform:none!important}#why .binding-virus,#why .binding-link{transition:none}#coda .rf-dial{transform:none!important}}
-.seriesMark{-webkit-text-stroke:1px rgba(124,195,194,.3);background:linear-gradient(100deg,transparent 44%,rgba(214,242,240,.22) 50%,transparent 56%) no-repeat,linear-gradient(180deg,rgba(124,195,194,.1),rgba(124,195,194,.015) 85%);background-size:260% 100%,100% 100%;background-position:120% 0,0 0;-webkit-background-clip:text;background-clip:text;opacity:var(--sm,0);transform:translateY(calc((1 - var(--sm,0)) * 36px));filter:blur(calc((1 - var(--sm,0)) * 4px));transition:none}
-.seriesMark.on{opacity:var(--sm,0);transform:translateY(calc((1 - var(--sm,0)) * 36px));filter:blur(calc((1 - var(--sm,0)) * 4px));animation:smSweep 3.6s .6s cubic-bezier(.4,0,.2,1) both}
-@media (prefers-reduced-motion:reduce){.seriesMark,.seriesMark.on{opacity:.8;transform:none;filter:none;animation:none}}</style>
+@media (prefers-reduced-motion:reduce){#potSvg .fl,#wsurf,#oySvg .flow-dash{animation:none}.plate img{transform:none!important}.title,.deck,.cue{animation:none;opacity:1}.series::before,.series span{animation:none;opacity:1;filter:none}.series span{transform:translateY(-50%) rotate(180deg)}.seriesMark,.seriesMark.on{opacity:.8;transform:none;filter:none;animation:none}#filter .diveShot img{will-change:auto;transform:none!important}#why .binding-virus,#why .binding-link{transition:none}#coda .rf-dial{transform:none!important}}
+</style>
 <script>document.documentElement.classList.add("js");</script>
 </head><body>
 <div id="rail"><i></i><div id="chap"></div></div>
@@ -363,7 +362,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="vignette" aria-hidden="true"></div>
 <main>
 <!-- 표지 -->
-<section class="act" id="cover" style="height:140vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="cover" style="height:140vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="163845,58767f,e8d0af" src="./00-cover.jpg" alt="잘게 부순 얼음 위에 놓인 생굴 한 접시와 레몬" data-k="1.12,1.0" fetchpriority="high"></div>
 <div class="scrim full"></div><div class="scrim dim" data-dim="0.7,1,0,1"></div>
 <div class="cover-wrap"><h1 class="title">러시안<br><b>굴</b>렛</h1><p class="deck">같은 굴을 나눠 먹어도<br>누구는 앓고 누구는 멀쩡하다.</p></div>
@@ -371,7 +370,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
 </div></section>
 <!-- 회사원 A씨의 경험 -->
-<section class="act" id="intro" data-fx="intro" style="height:215vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="intro" data-fx="intro" style="height:215vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="3b3136,6f5b5d,e2c7a4" loading="lazy" src="./00-intro.jpg" alt="식당 상 위에 놓인 생굴 한 접시와 굴젓" data-k="1.08,1.0" data-pan="-2.5,2.5"></div>
 <div class="scrim heavy"></div>
 <div class="beat lower" data-band="0.03,0.32"><p class="line">회사원 A씨는 겨울마다<br>생굴을 찾았다.</p><p class="note">굴젓도 즐겨 먹었다.</p></div>
@@ -379,7 +378,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.70,0.97"><p class="line">두세 명이 같은 상에서 굴을 먹었는데<br>A씨만 탈이 난 날도 있었다.</p><p class="note">같은 음식을 먹고도 왜 결과는 달랐을까.</p></div>
 </div></section>
 <!-- 숫자 -->
-<section class="act" id="numbers" data-fx="numbers" style="height:255vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="numbers" data-fx="numbers" style="height:255vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.66"><img data-ab="063f51,73b7bd,b5e4e5" loading="lazy" src="./01-sea.jpg" alt="겨울 새벽, 부표가 줄지어 떠 있는 굴 양식장" data-k="1.0,1.12"></div>
 <div class="plate" data-show="0.66,1"><img data-ab="063f51,73b7bd,b5e4e5" loading="lazy" src="./01-market.jpg" alt="수산시장 좌판에 쌓인 껍데기째 굴" data-k="1.08,1.0" data-pan="2.5,-2.5"></div>
 <div class="scrim heavy"></div>
@@ -388,7 +387,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.70,0.97"><p class="kicker">제철</p><p class="line">생굴이 식탁에 자주 오르는<br>계절과 겹친다.</p><p class="note">다만 노로바이러스는 굴뿐 아니라 오염된 물과 음식, 사람 간 접촉으로도 옮는다.</p></div>
 </div></section>
 <!-- 바다 -->
-<section class="act" id="filter" data-fx="filter" data-xt="tide" style="height:335vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="filter" data-fx="filter" data-xt="tide" style="height:335vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.70"><img data-ab="064958,218d94,c5e5d8" loading="lazy" src="./02-reef.jpg" alt="" aria-hidden="true" data-k="1.1,1.0"></div>
 <div class="plate" data-show="0.70,1"><img data-ab="064958,218d94,c5e5d8" loading="lazy" src="./02-coast.jpg" alt="바다로 이어지는 해안가 배수구" data-k="1.0,1.08"></div>
 <div class="scrim heavy"></div>
@@ -403,7 +402,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower origin-reveal" data-band="0.72,0.98"><p class="kicker noro">바닷물 속 바이러스의 출처</p><p class="line">굴 속 노로바이러스의 출발점은<br><em class="fecal">사람의 분변</em>일 수 있다.</p><p class="note">감염자의 분변에 섞인 바이러스가 하수 등을 거쳐 양식 해역으로 들어갈 수 있다. 굴은 오염된 물을 거르면서 바이러스를 축적하고, 이를 날로 먹은 사람은 다시 감염될 수 있다. 모든 굴이 오염됐다는 뜻은 아니다.</p></div>
 </div></section>
 <!-- 그날의 밥상 -->
-<section class="act" id="tbl" data-fx="tbl" style="height:245vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="tbl" data-fx="tbl" style="height:245vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="3b3538,6d5550,edd9bf" loading="lazy" src="./04-room.jpg" alt="" aria-hidden="true" data-k="1.06,1.0"></div>
 <div class="scrim heavy"></div><div class="tbl" id="tblBox"></div><div class="scrim bottom" style="z-index:4"></div>
 <div class="beat lower" data-band="0.02,0.30"><p class="kicker">그날의 밥상</p><p class="line">상에는 생굴 한 접시와<br>굴젓이 올랐다.</p><p class="note">굴젓도 생굴을 소금에 절여 만드는 음식이다.</p></div>
@@ -411,7 +410,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.70,0.98"><p class="line">먹은 양만으로<br>누가 아플지 단정할 수도 없다.</p><p class="note">바이러스의 양뿐 아니라 각자의 유전적 특성도 감염에 영향을 준다.</p></div>
 </div></section>
 <!-- 왜 나만 (3D) -->
-<section class="act" id="why" data-fx="why" style="height:420vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="why" data-fx="why" style="height:420vh" data-transition-extra="26"><div class="stage">
 <div class="w3" id="why3d" aria-hidden="true"></div>
 <svg class="w2" id="why2d" viewBox="0 0 800 500" aria-hidden="true"></svg>
 <div class="binding-board" id="bindingBoard" role="img" aria-label="노로바이러스 결합 모식도. 분비형은 일부 바이러스 유형이 이용하는 장 점막 항원이 나타난다. 비분비형은 해당 항원이 나타나지 않아 특정 유형의 결합이 어렵다.">
@@ -426,7 +425,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.82,0.98"><p class="kicker">증상 없는 감염</p><p class="line">아프지 않은 사람도<br>바이러스를 옮길 수 있다.</p><p class="note">2018년 81개 연구를 분석한 메타분석에서 증상이 없는 조사 대상자의 노로바이러스 검출률은 평균 7%였다. 겉으로 멀쩡해도 바이러스를 배출할 수 있다는 뜻이다.</p></div>
 </div></section>
 <!-- 잠복기 -->
-<section class="act" id="clock" data-fx="clock" style="height:285vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="clock" data-fx="clock" style="height:285vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.48"><img data-ab="193a56,49839c,b4d5e4" loading="lazy" src="./05-table.jpg" alt="" aria-hidden="true" data-k="1.0,1.1"></div>
 <div class="plate" data-show="0.48,1"><img data-ab="193a56,49839c,b4d5e4" loading="lazy" src="./05-night.jpg" alt="" aria-hidden="true" data-k="1.1,1.0" data-pan="2,-2"></div>
 <div class="scrim heavy"></div>
@@ -437,7 +436,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.78,0.98"><p class="line">대부분 1~3일 안에<br>회복한다.</p><p class="note">문제는 탈수다. 특히 어린이와 고령자, 면역력이 약한 사람은 심해질 수 있어 주의해야 한다.</p></div>
 </div></section>
 <!-- 수출 (지명·업체 없이 검사 체계로 설명) -->
-<section class="act" id="usa" data-fx="usa" style="height:260vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="usa" data-fx="usa" style="height:260vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.66"><img data-ab="163849,537e89,e0ddd2" loading="lazy" src="./03-port.jpg" alt="수출용 냉동 컨테이너가 늘어선 항구" data-k="1.08,1.0"></div>
 <div class="plate" data-show="0.66,1"><img data-ab="163849,537e89,e0ddd2" loading="lazy" src="./01-sea.jpg" alt="" aria-hidden="true" data-k="1.1,1.0"></div>
 <div class="scrim heavy"></div>
@@ -446,7 +445,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.70,0.98"><p class="kicker">산지</p><p class="line">굴은 한국의 대표<br>수출 수산물이다.</p><p class="note">한국은 세계 2위 굴 생산국이다. 국회에서는 생산 해역의 오염원 관리와 수출 전 검사를 강화해야 한다는 지적이 나왔다. 식약처는 2027년 2월 26일까지 생식용 굴을 포함한 겨울철 수산물 720건을 수거해 검사할 계획이다.</p></div>
 </div></section>
 <!-- 흔한 오해 -->
-<section class="act" id="myth" data-fx="myth" style="height:215vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="myth" data-fx="myth" style="height:215vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.66"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-lemon.jpg" alt="생굴 위로 레몬즙을 짜는 손" data-k="1.0,1.1" data-pan="-2,2.5"></div>
 <div class="plate" data-show="0.66,1"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-shore.jpg" alt="" aria-hidden="true" data-k="1.08,1.0"></div>
 <div class="scrim heavy"></div>
@@ -460,7 +459,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.68,0.98"><p class="kicker">비브리오균</p><p class="line">생굴에는<br>비브리오균도 있을 수 있다.</p><p class="note">비브리오균은 연안 바닷물에 자연적으로 사는 세균이다. 그중 비브리오 불니피쿠스균은 패혈증을 일으킬 수 있다. 미국 CDC에 따르면 이 균 감염자의 약 20%가 숨진다. 노로바이러스와는 다른 위험이다.</p></div>
 </div></section>
 <!-- 익히기 -->
-<section class="act" id="heat" data-fx="heat" style="height:300vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="heat" data-fx="heat" style="height:300vh" data-transition-extra="26"><div class="stage">
 <div class="plate" data-show="0,0.28"><img data-ab="472c2b,b56a42,ffe0b5" loading="lazy" src="./08-boil.jpg" alt="" aria-hidden="true" data-k="1.1,1.0"></div>
 <div class="plate" data-show="0.28,0.52"><img data-ab="472c2b,b56a42,ffe0b5" loading="lazy" src="./08-fry.jpg" alt="" aria-hidden="true" data-k="1.0,1.08" data-pan="2,-2"></div>
 <div class="plate" data-show="0.52,0.76"><img data-ab="472c2b,b56a42,ffe0b5" loading="lazy" src="./08-oven.jpg" alt="" aria-hidden="true" data-k="1.08,1.0"></div>
@@ -472,7 +471,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat centre" data-band="0.78,0.99"><p class="kicker warm">식약처 기준</p><div class="pkg" aria-hidden="true"><span class="pkgName">굴</span><span class="pkgW">150g</span><span class="pkgTag">가열조리용</span><span class="pkgNote">익혀서 드세요</span></div><p class="fig warm mid">85<small>℃</small><small> · </small>1<small>분</small></p><p class="figcap">포장에 ‘가열조리용’이나 ‘익혀 먹는’이 적힌 굴은<br>중심 온도 85℃ 이상에서 1분 이상 익혀야 한다</p><p class="figsub">‘가열조리용’ 표시는 날로 먹지 말라는 뜻이다.</p></div>
 </div></section>
 <!-- 껍데기째 -->
-<section class="act" id="pot" data-fx="pot" style="height:215vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="pot" data-fx="pot" style="height:215vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="4c302a,bf7844,ffdfad" loading="lazy" src="./09-stove.jpg" alt="" aria-hidden="true" data-k="1.06,1.0"></div>
 <div class="scrim heavy"></div>
 <div class="potBox"><svg id="potSvg" viewBox="0 0 1000 600" role="img" aria-label="끓는 냄비 속 껍데기째 굴이 하나씩 벌어지고, 끝까지 닫힌 굴 하나는 버린다"></svg></div>
@@ -482,7 +481,7 @@ html.xf main>.act>.xs{opacity:0;contain:paint}
 <div class="beat lower" data-band="0.70,0.99"><p class="line">끝까지 열리지 않는 굴은<br>버린다.</p></div>
 </div></section>
 <!-- 주방 -->
-<section class="act" id="kitchen" data-fx="kitchen" style="height:220vh" data-transition-extra="10"><div class="stage">
+<section class="act" id="kitchen" data-fx="kitchen" style="height:220vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="4d4137,b08b69,f4e0c0" loading="lazy" src="./10-kitchen.jpg" alt="" aria-hidden="true" data-k="1.0,1.08" data-pan="-2.5,2"></div>
 <div class="scrim side"></div>
 <div class="beat lower" data-band="0.02,0.74" style="max-width:min(760px,90vw)"><p class="kicker">조리 위생</p><p class="line">생굴을 손질한 손과 도마도<br>오염 경로가 될 수 있다.</p>
@@ -880,7 +879,7 @@ const cooked=t>.60;if(label.dataset.cooked!==(cooked?"1":"0")){label.dataset.coo
 label.style.opacity=(.82*(1-norm(p,.45,.56))).toFixed(3);
 if(wheel){const w=ease(norm(p,.46,.65));wheel.style.opacity=(w*.98).toFixed(3);wheel.style.setProperty("--phase",(calm?0:(-24+144*ease(norm(p,.46,.96)))).toFixed(2)+"deg");}};
 })();
-/* 맨 끝 시리즈명 */
+/* 맨 끝 시리즈명: 스크롤에 맞춰 은은하게 떠오른다 */
 (()=>{const sm=$("#seriesMark");if(!sm)return;let q=0;const up=()=>{q=0;const r=sm.getBoundingClientRect(),vh=innerHeight,abs=r.top+scrollY,range=Math.max(60,document.documentElement.scrollHeight-abs),k=clamp((vh-r.top)/range),e=k*k*(3-2*k);sm.style.setProperty("--sm",(e*.8).toFixed(3));if(k>.7)sm.classList.add("on");};addEventListener("scroll",()=>{if(!q){q=1;requestAnimationFrame(up);}},{passive:true});addEventListener("resize",up);up();})();
 /* 진행선 장 눈금 */
 const chapMarks=[];
@@ -950,25 +949,29 @@ req();
 })();
 </script>
 <script>
-/* 장면 겹침 + 전환 경계 빛: 다음 막은 --xb 동안 같은 자리에서 뜬다. data-xt 막은 tide·iris·heat 모양으로 열리고 경계에 빛이 따라간다. 움직임 줄이기면 모두 겹쳐 띄우기 */
+/* 장면 겹침: 다음 막은 --xb 동안 같은 자리에서 뜬다. 휠·터치 속도와 상관없이 전환이 부드럽게 따라오도록 보간한다.
+   data-xt="tide"는 물 차오르기 + 수면선. 사진이 다 뜬 뒤(xopen) 글이 나온다. 움직임 줄이기면 즉시 반영 */
 (function(){
 var root=document.documentElement,main=document.querySelector('main');if(!main)return;
 var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var acts=Array.prototype.filter.call(main.children,function(el){return el.classList.contains('act')&&el.firstElementChild;});if(acts.length<2)return;
 var probe=document.createElement('div');probe.setAttribute('aria-hidden','true');probe.style.cssText='position:absolute;top:0;left:0;width:1px;height:var(--xb);visibility:hidden;pointer-events:none';document.body.appendChild(probe);
-var secs=acts.slice(1).map(function(s){var st=s.firstElementChild,t=calm?'':(s.dataset.xt||''),e=null;st.classList.add('xs');if(t){e=document.createElement('i');e.className='xedge '+(t==='tide'?'tide':'ring'+(t==='heat'?' heat':''));e.setAttribute('aria-hidden','true');st.appendChild(e);}return{s:s,st:st,o:-1,t:t,e:e};});
+var secs=acts.slice(1).map(function(s){var st=s.firstElementChild,t=calm?'':(s.dataset.xt||''),e=null;st.classList.add('xs');if(t==='tide'){e=document.createElement('i');e.className='xedge tide';e.setAttribute('aria-hidden','true');st.appendChild(e);}return{s:s,st:st,o:0,g:0,d:-1,t:t,e:e};});
 acts[0].classList.add('xon');root.classList.add('xf');
-var XB=1,queued=false;
+var XB=1,raf=0,last=0;
 function measure(){XB=Math.max(1,probe.offsetHeight||innerHeight*.14);}
-function shape(t,o){if(o>=1)return'none';if(t==='tide')return'inset('+((1-o)*100).toFixed(2)+'% 0 0 0)';if(t==='heat')return'circle('+(o*150).toFixed(1)+'% at 50% 100%)';return'circle('+(o*75).toFixed(1)+'% at 50% 50%)';}
-function edge(x,o){var e=x.e;if(!e)return;if(o<=0||o>=1){e.style.opacity='0';return;}e.style.opacity='1';var w=x.st.clientWidth,h=x.st.clientHeight;if(x.t==='tide'){e.style.top=((1-o)*h).toFixed(1)+'px';return;}var r=(x.t==='heat'?1.5:.75)*o*Math.sqrt(w*w+h*h)/Math.SQRT2;e.style.width=e.style.height=(2*r).toFixed(1)+'px';e.style.left=(w/2)+'px';e.style.top=(x.t==='heat'?h:h/2)+'px';}
-function update(){queued=false;secs.forEach(function(x){var top=x.s.getBoundingClientRect().top,o=top>0?0:Math.min(1,-top/XB);x.s.classList.toggle('xon',top<=1);x.s.classList.toggle('xopen',o>=1);if(o===x.o)return;x.o=o;
-if(x.t){var c=shape(x.t,o);x.st.style.clipPath=c;x.st.style.webkitClipPath=c;x.st.style.opacity=o>0?'1':'0';edge(x,o);}else x.st.style.opacity=o.toFixed(4);});}
-function queue(){if(!queued){queued=true;requestAnimationFrame(update);}}
-addEventListener('scroll',queue,{passive:true});addEventListener('resize',function(){measure();secs.forEach(function(x){x.o=-1;});queue();},{passive:true});
+function apply(x){var o=x.o;if(Math.abs(o-x.d)<.0005)return;x.d=o;x.s.classList.toggle('xopen',o>=.98);
+if(x.t==='tide'){var c=o>=1?'none':'inset('+((1-o)*100).toFixed(2)+'% 0 0 0)';x.st.style.clipPath=c;x.st.style.webkitClipPath=c;x.st.style.opacity=o>0?'1':'0';if(x.e){if(o<=0||o>=1)x.e.style.opacity='0';else{x.e.style.opacity='1';x.e.style.top=((1-o)*x.st.clientHeight).toFixed(1)+'px';}}}
+else x.st.style.opacity=o.toFixed(4);}
+function target(x){var top=x.s.getBoundingClientRect().top;x.s.classList.toggle('xon',top<=1);x.g=top>0?0:Math.min(1,-top/XB);}
+function tick(now){raf=0;var dt=last?Math.min(64,now-last):16;last=now;var k=calm?1:1-Math.exp(-dt/110),busy=false;
+secs.forEach(function(x){target(x);var dd=x.g-x.o;if(Math.abs(dd)<.002)x.o=x.g;else{x.o+=dd*k;busy=true;}apply(x);});
+if(busy)raf=requestAnimationFrame(tick);else last=0;}
+function queue(){if(!raf)raf=requestAnimationFrame(tick);}
+addEventListener('scroll',queue,{passive:true});addEventListener('resize',function(){measure();secs.forEach(function(x){x.d=-1;});queue();},{passive:true});
 var chap=document.getElementById('chap');
 if(chap)chap.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var el=document.getElementById(a.getAttribute('href').slice(1));if(!el)return;e.preventDefault();e.stopPropagation();var top=el.offsetTop+(acts.indexOf(el)>0?XB:0)+2,mx=Math.max(1,root.scrollHeight-innerHeight);if(window.__oyHosted&&window.__oySend)window.__oySend('goto',{progress:Math.min(1,top/mx)});else scrollTo({top:top,behavior:calm?'auto':'smooth'});},true);
-measure();update();dispatchEvent(new Event('scroll'));
+measure();secs.forEach(function(x){target(x);x.o=x.g;apply(x);});queue();
 })();
 </script>
 <script type="module">
@@ -996,13 +999,13 @@ let sd=7;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
 const H=(x,z)=>-1.6+.17*Math.sin(x*2.1)*Math.cos(z*1.7)+.06*Math.sin(x*5.3+z*3.1);
 const seg=LITE?90:170,pg=new T.PlaneGeometry(18,18,seg,seg);pg.rotateX(-Math.PI/2);
 const pa=pg.attributes.position;for(let i=0;i<pa.count;i++)pa.setY(i,H(pa.getX(i),pa.getZ(i)));pg.computeVertexNormals();
-sc.add(new T.Mesh(pg,new T.MeshStandardMaterial({color:0xa9736c,roughness:.82})));
-/* 융모: 착지 자리와 카메라 앞은 비우고 뒤쪽·양옆에 세운다 */
-const VN=LITE?56:120,vil=[];
-while(vil.length<VN){const x=(rnd()-.5)*14,z=-6+rnd()*7.2;if(Math.hypot(x,z+.4)<2.3||(z>.2&&Math.abs(x)<3))continue;vil.push({x,z,y:H(x,z)-.05,h:.75+rnd()*.7,ph:rnd()*6.283,tw:(rnd()-.5)*.25});}
-const vG=new T.CapsuleGeometry(.17,1,6,14);vG.translate(0,.67,0);
-const vM=new T.InstancedMesh(vG,new T.MeshPhysicalMaterial({color:0xb87d74,roughness:.62,sheen:.6,sheenColor:new T.Color(0xffc9c9),sheenRoughness:.5,clearcoat:.15,clearcoatRoughness:.6}),VN);sc.add(vM);
-function villi(t){for(let i=0;i<VN;i++){const v=vil[i];E.set(Math.sin(t*.55+v.ph)*.05+v.tw,0,Math.cos(t*.45+v.ph)*.05);Q.setFromEuler(E);S.set(1,v.h,1);P.set(v.x,v.y,v.z);M.compose(P,Q,S);vM.setMatrixAt(i,M);}vM.instanceMatrix.needsUpdate=true;}
+sc.add(new T.Mesh(pg,new T.MeshStandardMaterial({color:0xa86e68,roughness:.82})));
+/* 융모: 끝이 가늘어지는 손가락 모양. 착지 자리와 카메라 앞은 비우고 뒤쪽·양옆에 촘촘히 */
+const VN=LITE?90:180,vil=[];
+while(vil.length<VN){const x=(rnd()-.5)*15,z=-6.5+rnd()*7;if(z>-1.6&&Math.abs(x)<3.2)continue;vil.push({x,z,y:H(x,z)-.04,h:.55+rnd()*.5,w:.8+rnd()*.45,ph:rnd()*6.283,tw:(rnd()-.5)*.22});}
+const vG=new T.LatheGeometry([[.11,0],[.105,.22],[.096,.46],[.084,.62],[.066,.72],[.04,.78],[0,.8]].map(([r,y])=>new T.Vector2(r,y)),14);
+const vM=new T.InstancedMesh(vG,new T.MeshPhysicalMaterial({color:0xa86e68,roughness:.6,sheen:.7,sheenColor:new T.Color(0xffc9c9),sheenRoughness:.45,clearcoat:.2,clearcoatRoughness:.5}),VN);sc.add(vM);
+function villi(t){for(let i=0;i<VN;i++){const v=vil[i];E.set(Math.sin(t*.55+v.ph)*.05+v.tw,0,Math.cos(t*.45+v.ph)*.05);Q.setFromEuler(E);S.set(v.w,v.h,v.w);P.set(v.x,v.y,v.z);M.compose(P,Q,S);vM.setMatrixAt(i,M);}vM.instanceMatrix.needsUpdate=true;}
 /* 혈액형 항원 */
 const N=LITE?200:380,ant=[];
 for(let i=0;i<N;i++){const r=Math.sqrt(rnd())*4.4,a=rnd()*6.283,x=Math.cos(a)*r,z=Math.sin(a)*r*.75-.4;ant.push({x,z,y:H(x,z),tx:(rnd()-.5)*.5,yw:rnd()*6.283,k:.75+rnd()*.5,ph:rnd()*6.283});}
