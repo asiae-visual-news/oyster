@@ -378,13 +378,13 @@ html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:no
 <div class="series" aria-label="딥 스크롤 시리즈 4편"><span>DEEP SCROLL · 04</span></div>
 <div class="cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
 </div></section>
-<!-- 회사원 A씨의 경험 -->
-<section class="act" id="intro" data-fx="intro" style="height:230vh" data-transition-extra="26"><div class="stage">
+<!-- 회사원 A씨의 경험. 첫 문장은 data-hold로 최소 1.3초 먼저 보인다 -->
+<section class="act" id="intro" data-fx="intro" style="height:270vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="3b3136,6f5b5d,e2c7a4" loading="lazy" src="./00-intro.jpg" alt="식당 상 위에 놓인 생굴 한 접시와 굴젓" data-k="1.08,1.0" data-pan="-2.5,2.5"></div>
 <div class="scrim heavy"></div>
 <div class="six-mini" id="sixMini" aria-hidden="true"></div>
-<div class="beat lower" data-band="0.03,0.32"><p class="line">회사원 A씨는 겨울마다<br>생굴을 찾았다.</p><p class="note">굴젓도 즐겨 먹었다.</p></div>
-<div class="beat lower" data-band="0.38,0.64"><p class="line">생굴을 먹은 뒤 몸이 아팠던 적이<br>다섯 번 있었다.</p><div class="tally" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i></div><p class="note">결국 생굴을 끊었다.</p></div>
+<div class="beat lower" data-band="0.03,0.36" data-hold="1300"><p class="line">회사원 A씨는 겨울마다<br>생굴을 찾았다.</p><p class="note">굴젓도 즐겨 먹었다.</p></div>
+<div class="beat lower" data-band="0.42,0.64"><p class="line">생굴을 먹은 뒤 몸이 아팠던 적이<br>다섯 번 있었다.</p><div class="tally" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i></div><p class="note">결국 생굴을 끊었다.</p></div>
 <div class="beat lower" data-band="0.70,0.97"><p class="line">두세 명이 같은 상에서 굴을 먹었는데<br>A씨만 탈이 난 날도 있었다.</p><p class="note">같은 음식을 먹고도 왜 결과는 달랐을까.</p></div>
 </div></section>
 <!-- 숫자 -->
@@ -589,10 +589,12 @@ x.globalAlpha=1;}
 requestAnimationFrame(loop);}
 requestAnimationFrame(loop);
 })();
-/* 엔진. 시간에 맞춰 움직이는 연출(rv: 카운트업·온도계·막대·컨테이너 등)은 장면이 다 뜬 뒤(xopen)부터 시간을 잰다 */
+/* 엔진. 시간에 맞춰 움직이는 연출(rv: 카운트업·온도계·막대·컨테이너 등)은 장면이 다 뜬 뒤(xopen)부터 시간을 잰다.
+   data-hold(ms)가 붙은 대목은 위에서 내려올 때 건너뛰지 않는다: 한 번에 훑어 내려도 그 대목을 최소 hold 동안 먼저 보여 준 뒤 다음으로 넘긴다.
+   아래에서 거슬러 올라오거나 장면 끝(97%)까지 단번에 지나간 경우에는 붙잡지 않는다 */
 const FX={};
 const acts=$$(".act").map((el,ai)=>({el,fx:el.dataset.fx,ps:null,first:ai===0,
-beats:$$(".beat",el).map(b=>({b,band:nums(b.dataset.band),active:false,live:false,past:false,t0:0,rv:0,rev:Math.min(1600,+b.dataset.rev||650)})),
+beats:$$(".beat",el).map(b=>({b,band:nums(b.dataset.band),active:false,live:false,past:false,t0:0,rv:0,rev:Math.min(1600,+b.dataset.rev||650),hold:+b.dataset.hold||0,pending:true})),
 counters:$$("[data-c]",el).map(n=>{const a=n.dataset.c.split(",");return{n,f:+a[0],t:+a[1],a:+a[2],z:+a[3],k:a[4],last:null};}),
 kb:$$("img[data-k]",el).map(i=>({i,k:nums(i.dataset.k),pan:i.dataset.pan?nums(i.dataset.pan):null})),
 ro:$$("[data-ro]",el).map(r=>({r,band:nums(r.dataset.ro)})),
@@ -603,7 +605,8 @@ const actById=id=>acts.find(a=>a.el.id===id);
 const fmtC=(v,k)=>k==="comma"?fmt(v):String(Math.round(v));
 function activeIndex(a,p){const B=a.beats;let idx=-1;for(let i=0;i<B.length;i++)if(p>=B[i].band[0]&&p<=B[i].band[1])idx=i;if(idx<0)for(let i=0;i<B.length-1;i++)if(p>B[i].band[1]&&p<B[i+1].band[0]&&p-B[i].band[1]<.06)idx=i;return idx;}
 function render(act,p,now){
-let busy=false;const idx=activeIndex(act,p),open=act.first||act.el.classList.contains("xopen");
+let busy=false,idx=activeIndex(act,p);const open=act.first||act.el.classList.contains("xopen");
+act.beats.forEach((o,i)=>{if(!o.hold)return;if(p<o.band[0])o.pending=true;else if(p>=.97)o.pending=false;if(o.pending&&idx>i&&p>=o.band[0]){if(o.live&&now-o.t0>=o.hold)o.pending=false;else{idx=i;busy=true;}}});
 act.beats.forEach((o,i)=>{const on=i===idx,past=!on&&p>=o.band[1],live=on&&open;if(live&&!o.live)o.t0=now;o.live=live;o.active=on;o.past=past;o.b.classList.toggle("on",on);o.b.classList.toggle("past",past);if(on){o.rv=live?clamp((now-o.t0-80)/o.rev):0;if(live&&o.rv<1)busy=true;}else o.rv=past?1:0;});
 act.counters.forEach(c=>{const k=c.reveal?c.beat.rv:norm(p,c.a,c.z),s=fmtC(lerp(c.f,c.t,easeOut(k)),c.k);if(s!==c.last){c.n.textContent=s;c.last=s;}});
 act.kb.forEach(({i,k,pan})=>{if(calm)return;const s=lerp(k[0],k[1],p);i.style.transform=pan?`translate3d(${lerp(pan[0],pan[1],p).toFixed(2)}%,0,0) scale(${Math.max(s,1.08).toFixed(4)})`:`scale(${s.toFixed(4)})`;});
