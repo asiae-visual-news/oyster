@@ -1,0 +1,56 @@
+<div id="shoesZone" style="position:relative;display:block;width:100%;height:100vh;margin:0;padding:0;background:#0B0906"><div id="shoesPin" style="position:sticky;top:0;width:100%;height:100vh;overflow:hidden;background:#0B0906"><iframe id="shoesFrame" src="https://hyun05-cpu.github.io/shoes/?v=2026101603" title="신발만 벗는다 — 딥 스크롤 인터랙티브" loading="eager" allow="autoplay; fullscreen" allowfullscreen style="display:block;width:100%;height:100%;border:0;margin:0;padding:0;background:#0B0906"></iframe></div></div><script>(function(){
+var TOPFIX=-1,O="https://hyun05-cpu.github.io",P="shoes";
+var z=document.getElementById("shoesZone"),w=document.getElementById("shoesPin"),f=document.getElementById("shoesFrame");
+if(!z||!w||!f||z.getAttribute("data-on"))return;
+z.setAttribute("data-on","1");
+var sty=document.createElement("style");(document.head||document.documentElement).appendChild(sty);
+var EDIT=!!(z.closest&&z.closest("[contenteditable=true],[contenteditable='']"))||document.body.isContentEditable||document.designMode==="on";
+if(EDIT){sty.textContent="#shoesZone{height:70vh!important}#shoesPin{height:70vh!important;position:static!important}";return;}
+var de=document.documentElement,linked=false,HT=0,L=0,W=0,SV=0,TOP=TOPFIX>=0?TOPFIX:0,mode="sticky",ok=false,lastP=-1,lastD=-1,raf=0,tg=null,sR=0,hs=0;
+var mobile=matchMedia("(pointer:coarse) and (max-width:760px)").matches;
+function cl(v,a,b){return v<a?a:v>b?b:v}
+function S(m){try{f.contentWindow.postMessage(m,O)}catch(e){}}
+var pr=document.createElement("div");pr.setAttribute("aria-hidden","true");pr.style.cssText="position:fixed;left:0;top:0;width:1px;height:100svh;visibility:hidden;pointer-events:none";document.body.appendChild(pr);
+function svh(){return pr.offsetHeight||innerHeight}
+var an=document.createElement("div");an.setAttribute("aria-hidden","true");an.style.cssText="display:block;height:0;margin:0;padding:0;border:0;clear:both";z.parentNode.insertBefore(an,z);
+var SKO="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden",sk=document.createElement("a");sk.href="#shoesAfter";sk.textContent="인터랙티브 기사 건너뛰기";sk.style.cssText=SKO;
+sk.addEventListener("focus",function(){sk.style.cssText="position:static;display:inline-block;margin:8px 0;padding:8px 12px;background:#0B0906;color:#F6DDB5;font-size:14px"});sk.addEventListener("blur",function(){sk.style.cssText=SKO});z.parentNode.insertBefore(sk,an);
+var af=document.createElement("div");af.id="shoesAfter";af.tabIndex=-1;af.style.cssText="height:0;outline:none";z.parentNode.insertBefore(af,z.nextSibling);
+function ph(){return Math.max(200,SV-TOP)}
+function paint(){var h=ph(),js=mode==="js";sty.textContent="#shoesZone{position:relative!important;z-index:2147483000!important;display:block!important;float:none!important;box-sizing:border-box!important;height:"+(linked&&HT?HT:h)+"px!important;width:"+W+"px!important;max-width:none!important;margin:0 0 0 "+(-L)+"px!important;padding:0!important}#shoesPin{position:"+(js?"relative":"sticky")+"!important;top:"+(js?0:TOP)+"px!important;width:100%!important;height:"+h+"px!important;margin:0!important;padding:0!important;overflow:hidden!important"+(js?";will-change:transform":"")+"}#shoesFrame{display:block!important;width:100%!important;height:100%!important;max-width:none!important;border:0!important;margin:0!important}"}
+function measure(){L=an.getBoundingClientRect().left;W=de.clientWidth;SV=svh();paint()}
+function unclip(){for(var p=z.parentElement;p&&p!==document.body&&p!==de;p=p.parentElement){var s=getComputedStyle(p);if(/hidden|auto|scroll/.test(s.overflowX+" "+s.overflowY)){p.style.setProperty("overflow","visible","important");p.style.setProperty("overflow-x","visible","important");p.style.setProperty("overflow-y","visible","important")}}}
+function verify(r){if(ok)return;var h=ph();if(r.top>TOP-60||r.bottom<TOP+h+60)return;ok=true;if(mode==="sticky"&&Math.abs(w.getBoundingClientRect().top-TOP)>2){mode="js";paint()}if(TOPFIX<0){var el=document.elementFromPoint(innerWidth/2,3);if(el&&!z.contains(el)){for(var c=el;c&&c!==document.body&&c!==de;c=c.parentElement){var cs=getComputedStyle(c);if(cs.position==="fixed"||cs.position==="sticky"){var b=Math.round(c.getBoundingClientRect().bottom);if(b>0&&b<SV*.3){TOP=b;lastD=-1;paint()}break}}}}}
+/* 모바일에서는 iframe에 손가락 제스처를 주지 않고, 부모 문서가 직접 자연스럽게 스크롤한다. */
+var shield=null,shieldOn=false,downX=0,downY=0,moved=false;
+if(mobile){
+ shield=document.createElement("div");shield.setAttribute("aria-label","인터랙티브 기사 터치 영역");
+ shield.style.cssText="position:fixed;left:0;right:0;top:0;height:0;display:none;background:transparent;z-index:2147483001;pointer-events:auto;touch-action:pan-y;overscroll-behavior:auto;-webkit-user-select:none;user-select:none";
+ document.body.appendChild(shield);
+ shield.addEventListener("touchstart",function(e){if(e.touches.length){downX=e.touches[0].clientX;downY=e.touches[0].clientY;moved=false;}},{passive:true});
+ shield.addEventListener("touchmove",function(e){if(e.touches.length&&(Math.abs(e.touches[0].clientY-downY)>9||Math.abs(e.touches[0].clientX-downX)>9))moved=true;},{passive:true});
+ shield.addEventListener("click",function(e){if(moved){moved=false;return;}var r=f.getBoundingClientRect();var x=e.clientX-r.left,y=e.clientY-r.top;if(x>=0&&x<r.width&&y>=0&&y<r.height)S({type:P+":tap",x:x,y:y});});
+}
+function updateShield(r){if(!shield)return;var vTop=Math.max(0,TOP,r.top),vBottom=Math.min(innerHeight,r.bottom),height=Math.max(0,vBottom-vTop);var on=linked&&height>2;if(on){shield.style.top=vTop+"px";shield.style.height=height+"px";shield.style.display="block";}else shield.style.display="none";if(on!==shieldOn){shieldOn=on;S({type:P+":shield",on:on});}}
+function place(){raf=0;var r=z.getBoundingClientRect();verify(r);var h=ph(),g=Math.max(0,z.offsetHeight-h),d=cl(TOP-r.top,0,g);if(mode==="js"&&d!==lastD){lastD=d;w.style.transform="translate3d(0,"+d+"px,0)"}if(linked&&g>0){var p=d/g;if(Math.abs(p-lastP)>1e-6){lastP=p;S({type:P+":progress",progress:p,armed:1})}}updateShield(r)}
+function schedule(){if(!raf)raf=requestAnimationFrame(place)}
+function maxY(){return Math.max(0,(document.scrollingElement||de).scrollHeight-innerHeight)}
+function jump(y){var sb=de.style.scrollBehavior;de.style.scrollBehavior="auto";scrollTo(scrollX,cl(y,0,maxY()));de.style.scrollBehavior=sb;schedule()}
+function stop(){if(sR){cancelAnimationFrame(sR);sR=0}tg=null}
+function smooth(){sR=0;if(tg===null)return;var d=tg-scrollY;if(Math.abs(d)<1){jump(tg);tg=null;return}var s=d*.22;if(Math.abs(s)<1)s=d>0?1:-1;var old=scrollY;jump(old+s);if(Math.abs(scrollY-old)<.1){tg=null;return}sR=requestAnimationFrame(smooth)}
+function wheel(d,m){if(m===1)d*=16;else if(m===2)d*=innerHeight;if(tg===null&&Math.abs(d)<40){jump(scrollY+d);return}tg=cl((tg===null?scrollY:tg)+d,0,maxY());if(!sR)sR=requestAnimationFrame(smooth)}
+function startY(){return scrollY+z.getBoundingClientRect().top-TOP}
+function rng(){return Math.max(0,z.offsetHeight-ph())}
+function key(k){var pg=ph()*.85;if(k==="ArrowDown")wheel(80,0);else if(k==="ArrowUp")wheel(-80,0);else if(k==="PageDown"||k===" ")wheel(pg,0);else if(k==="PageUp")wheel(-pg,0);else if(k==="Home"){stop();jump(startY())}else if(k==="End"){stop();jump(startY()+rng())}}
+function setH(h){h=Math.round(+h||0);if(h<=0||h===HT)return;HT=h;lastP=-1;paint();schedule()}
+function hello(){if(!linked)S({type:P+":host",ready:1})}
+addEventListener("message",function(e){if(e.origin!==O||e.source!==f.contentWindow)return;var d=e.data;if(!d||typeof d.type!=="string"||d.type.indexOf(P+":")!==0)return;var t=d.type.slice(P.length+1);if(t==="ack"){clearInterval(hs);linked=true;if(d.height)setH(d.height);else S({type:P+":requestHeight"});schedule();return}if(!linked)return;if(t==="height")setH(d.height);else if(t==="wheel")wheel(+d.deltaY||0,+d.deltaMode||0);else if(t==="key")key(String(d.key));else if(t==="sync"){stop();jump(startY()+rng()*cl(+d.progress||0,0,1))}else if(!mobile&&t==="touchscroll"){jump(scrollY+(+d.deltaY||0))}});
+hs=setInterval(hello,400);setTimeout(function(){clearInterval(hs)},15000);
+f.addEventListener("load",function(){hello();measure();schedule()});
+var pw=de.clientWidth;
+addEventListener("resize",function(){var cw=de.clientWidth,sv=svh();if(cw===pw&&Math.abs(sv-SV)<2)return;pw=cw;measure();lastD=-1;schedule()},{passive:true});
+addEventListener("scroll",schedule,{passive:true});
+unclip();measure();schedule();hello();
+setTimeout(function(){unclip();measure();schedule()},300);setTimeout(function(){unclip();measure();schedule()},1200);
+addEventListener("load",function(){measure();schedule()});
+})();</script>
