@@ -23,7 +23,8 @@
 <style>
 /* 04편 규칙: 기사 톤, 게임 장치·흔들림 없음. 기자 경험 밖 장면은 지어내지 않는다. 날것=청록, 익힘=호박, 바이러스=연분홍.
    3D는 '왜 나만' 한 곳. 장면 사이는 밀어 올리지 않는다. 전환은 겹쳐 띄우기(보간) + 바다만 물 차오르기. 사진이 다 뜬 뒤 글이 나온다.
-   여섯 개 접시 모티프: A씨(다섯 번) → 그날의 밥상 → 마지막 접시. 마지막 접시는 화살표·눈금 없이 한 번 돌고 멈춘다. 잠복기는 시계 시각에 맞춰 색온도가 바뀐다. */
+   여섯 개 접시 모티프: A씨(다섯 번) → 그날의 밥상 → 마지막 접시. 마지막 접시는 화살표·눈금 없이 한 번 돌고 멈춘다. 잠복기는 시계 시각에 맞춰 색온도가 바뀐다.
+   오해 장면은 오해가 지워지는 동안 레몬 쪽으로 다가갔다가, 비브리오균 대목에서 갯벌로 물러난다. */
 :root{--ink:#07151b;--ink-2:#0e242b;--slate:#91aeb6;--slate-lt:#A9BDC6;--chalk:#f4f8f7;--brine:#96e1df;--flame:#EE9A5C;--noro:#F08DAE;--sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;--serif:"Song Myung","Noto Serif KR",serif;--gut:clamp(20px,5vw,64px);--xb:20svh;--read-col:39ch}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
@@ -203,6 +204,10 @@ html.no3d .w2{display:block}
 .flow b.gap.on{border-color:rgba(240,141,174,.6);background:rgba(240,141,174,.06)}.flow b.bad.on{border-color:rgba(240,141,174,.75);background:rgba(240,141,174,.12)}
 #myth .myth-main-title{font-family:var(--serif);font-size:clamp(32px,3.8vw,48px);font-weight:400;line-height:1.3;color:#fff;letter-spacing:-.018em;text-shadow:0 2px 22px rgba(2,8,12,.86);text-align:left;margin:0 auto 10px;width:min(92vw,760px);padding-left:26px;position:relative}
 #myth .myth-main-title::before{content:"";position:absolute;width:17px;height:2px;top:.62em;left:0;background:#7CC3C2;box-shadow:0 0 8px rgba(124,195,194,.7)}
+/* 오해 장면 사진: 오해가 지워지는 동안 레몬 쪽으로 다가가고, 비브리오균 대목에서 갯벌로 물러난다. 크기·투명도는 스크립트가 넣는다 */
+#myth .myth-shore{opacity:0}
+#myth .myth-lemon img{transform-origin:66% 18%}
+#myth .myth-shore img{transform-origin:50% 62%}
 .myths{width:min(92vw,760px);margin:10px auto 0;text-align:left}
 .my{display:grid;grid-template-columns:1fr 1.25fr;gap:22px;align-items:baseline;padding:15px 4px;border-top:1px solid rgba(236,241,239,.14)}
 .my:last-child{border-bottom:1px solid rgba(236,241,239,.14)}
@@ -283,6 +288,11 @@ html.xf main>.act:not(.xon){pointer-events:none}
 html.xf main>.act>.xs{opacity:0;contain:paint}
 /* 사진이 다 뜨기 전에는 새 장면의 글을 숨긴다 */
 html.xf main>.act+.act:not(.xopen) .beat,html.xf main>.act+.act:not(.xopen) .readout,html.xf main>.act+.act:not(.xopen) .binding-board,html.xf main>.act+.act:not(.xopen) .six-mini{opacity:0!important}
+/* 글 안쪽 움직임(줄 올라오기·밑줄·키커 선·큰 숫자)도 장면이 다 뜰 때까지 멈춰 두었다가, 뜬 뒤에 시작한다 */
+html.xf main>.act+.act:not(.xopen) .beat .ln>span{transform:translateY(112%);transition:none}
+html.xf main>.act+.act:not(.xopen) .beat .kicker::before{transform:scaleX(0);transition:none}
+html.xf main>.act+.act:not(.xopen) .beat .line em{background-size:0 2px;transition:none}
+html.xf main>.act+.act:not(.xopen) .beat .fig{transform:scale(.94);transition:none}
 @media(min-width:1100px) and (min-height:670px){
  #filter .fbox{left:30%;top:50%;transform:translate(-50%,-50%);width:min(53vw,790px,calc((100svh - 160px)*1.613))}
  #filter .loopD{left:30%;top:22%;width:min(51vw,610px)}
@@ -333,6 +343,7 @@ html.xf main>.act+.act:not(.xopen) .beat,html.xf main>.act+.act:not(.xopen) .rea
  #usa .figsub.export-caption{max-width:32ch;font-size:14px;line-height:1.6;margin-top:9px}#usa .export-source{font-size:12px;margin-top:6px}
  .flow{grid-template-columns:repeat(2,1fr)}.flow b{font-size:14px}.flow b em{font-size:12.5px}
  #myth .myth-main-title{font-size:clamp(28px,7vw,36px);margin-bottom:5px}#myth .myths{margin-top:7px}
+ #myth .myth-lemon img{object-position:64% center;transform-origin:72% 16%}
  .my{grid-template-columns:1fr;gap:6px;padding:10px 2px}.my span{font-size:15.5px}
  .potBox{top:60px;height:48vh}
  #coda .coda-photo-label{top:64px;left:20px;font-size:15px}
@@ -368,7 +379,7 @@ html.xf main>.act+.act:not(.xopen) .beat,html.xf main>.act+.act:not(.xopen) .rea
 <div class="cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
 </div></section>
 <!-- 회사원 A씨의 경험 -->
-<section class="act" id="intro" data-fx="intro" style="height:215vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="intro" data-fx="intro" style="height:230vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="3b3136,6f5b5d,e2c7a4" loading="lazy" src="./00-intro.jpg" alt="식당 상 위에 놓인 생굴 한 접시와 굴젓" data-k="1.08,1.0" data-pan="-2.5,2.5"></div>
 <div class="scrim heavy"></div>
 <div class="six-mini" id="sixMini" aria-hidden="true"></div>
@@ -445,9 +456,9 @@ html.xf main>.act+.act:not(.xopen) .beat,html.xf main>.act+.act:not(.xopen) .rea
 <div class="beat lower" data-band="0.70,0.98"><p class="kicker">산지</p><p class="line">굴은 한국의 대표<br>수출 수산물이다.</p><p class="note">한국은 세계 2위 굴 생산국이다. 국회에서는 생산 해역의 오염원 관리와 수출 전 검사를 강화해야 한다는 지적이 나왔다. 식약처는 2027년 2월 26일까지 생식용 굴을 포함한 겨울철 수산물 720건을 수거해 검사할 계획이다.</p></div>
 </div></section>
 <!-- 흔한 오해 -->
-<section class="act" id="myth" data-fx="myth" style="height:215vh" data-transition-extra="26"><div class="stage">
-<div class="plate" data-show="0,0.66"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-lemon.jpg" alt="생굴 위로 레몬즙을 짜는 손" data-k="1.0,1.1" data-pan="-2,2.5"></div>
-<div class="plate" data-show="0.66,1"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-shore.jpg" alt="" aria-hidden="true" data-k="1.08,1.0"></div>
+<section class="act" id="myth" data-fx="myth" style="height:255vh" data-transition-extra="26"><div class="stage">
+<div class="plate myth-lemon"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-lemon.jpg" alt="생굴 위로 레몬즙을 짜는 손"></div>
+<div class="plate myth-shore"><img data-ab="235166,8bb7b2,f2dfbd" loading="lazy" src="./07-shore.jpg" alt="" aria-hidden="true"></div>
 <div class="scrim heavy"></div>
 <div class="beat centre" data-band="0.02,0.62"><h2 class="myth-main-title">흔한 오해</h2><div class="myths" id="myths">
 <div class="my"><s>레몬즙을 뿌리면 괜찮다</s><span>레몬즙만으로 노로바이러스를 없앨 수는 없다.</span></div>
@@ -481,17 +492,17 @@ html.xf main>.act+.act:not(.xopen) .beat,html.xf main>.act+.act:not(.xopen) .rea
 <div class="beat lower" data-band="0.70,0.99"><p class="line">끝까지 열리지 않는 굴은<br>버린다.</p></div>
 </div></section>
 <!-- 주방 -->
-<section class="act" id="kitchen" data-fx="kitchen" style="height:220vh" data-transition-extra="26"><div class="stage">
+<section class="act" id="kitchen" data-fx="kitchen" style="height:250vh" data-transition-extra="26"><div class="stage">
 <div class="plate"><img data-ab="4d4137,b08b69,f4e0c0" loading="lazy" src="./10-kitchen.jpg" alt="" aria-hidden="true" data-k="1.0,1.08" data-pan="-2.5,2"></div>
 <div class="scrim side"></div>
-<div class="beat lower" data-band="0.02,0.74" style="max-width:min(760px,90vw)"><p class="kicker">조리 위생</p><p class="line">생굴을 손질한 손과 도마도<br>오염 경로가 될 수 있다.</p>
+<div class="beat lower" data-band="0.02,0.70" style="max-width:min(760px,90vw)"><p class="kicker">조리 위생</p><p class="line">생굴을 손질한 손과 도마도<br>오염 경로가 될 수 있다.</p>
 <ul class="chk" id="chkList">
 <li><i aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h9a4 4 0 0 1 4 4v1"/><path d="M4 5v6M9 8V4M6 4h6"/><path d="M17 17v1M15 20v1M19 20v1"/></svg><span>생굴을 만진 뒤엔 비누로 흐르는 물에 30초 이상 손 씻기</span></li>
 <li><i aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="12" width="18" height="8" rx="2"/><path d="M6 10 18 3l1 2-9 6"/></svg><span>칼·도마는 바로 씻고, 날것과 익힌 음식용을 나눠 쓰기</span></li>
 <li><i aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 3s-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8Z"/><path d="M14 14h7M14 18h7M17.5 11v10"/></svg><span>생굴에서 나온 물이 다른 식재료에 닿지 않게 하기</span></li>
 <li><i aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 13h14a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M17 13h4"/><path d="M5 4l12 6M17 4 5 10"/></svg><span>구토·설사 증상이 있으면 음식 만들지 않기</span></li>
 </ul></div>
-<div class="beat lower" data-band="0.80,0.99"><p class="line">경로가 확인된 집단발생에서는<br>사람 간 전파가 더 많았다.</p><p class="note">질병관리청 잠정 집계에서 2025년 감염경로가 확인된 노로바이러스 집단발생 102건 가운데 63건(61.8%)이 사람 간 전파였다. 그중 45건은 어린이집과 유치원에서 발생했다.</p></div>
+<div class="beat lower" data-band="0.76,0.99"><p class="line">경로가 확인된 집단발생에서는<br>사람 간 전파가 더 많았다.</p><p class="note">질병관리청 잠정 집계에서 2025년 감염경로가 확인된 노로바이러스 집단발생 102건 가운데 63건(61.8%)이 사람 간 전파였다. 그중 45건은 어린이집과 유치원에서 발생했다.</p></div>
 </div></section>
 <!-- 익힌 굴 -->
 <section class="act" id="coda" data-fx="coda" style="height:220vh"><div class="stage">
@@ -578,10 +589,10 @@ x.globalAlpha=1;}
 requestAnimationFrame(loop);}
 requestAnimationFrame(loop);
 })();
-/* 엔진 */
+/* 엔진. 시간에 맞춰 움직이는 연출(rv: 카운트업·온도계·막대·컨테이너 등)은 장면이 다 뜬 뒤(xopen)부터 시간을 잰다 */
 const FX={};
-const acts=$$(".act").map(el=>({el,fx:el.dataset.fx,ps:null,
-beats:$$(".beat",el).map(b=>({b,band:nums(b.dataset.band),active:false,past:false,t0:0,rv:0,rev:Math.min(1600,+b.dataset.rev||650)})),
+const acts=$$(".act").map((el,ai)=>({el,fx:el.dataset.fx,ps:null,first:ai===0,
+beats:$$(".beat",el).map(b=>({b,band:nums(b.dataset.band),active:false,live:false,past:false,t0:0,rv:0,rev:Math.min(1600,+b.dataset.rev||650)})),
 counters:$$("[data-c]",el).map(n=>{const a=n.dataset.c.split(",");return{n,f:+a[0],t:+a[1],a:+a[2],z:+a[3],k:a[4],last:null};}),
 kb:$$("img[data-k]",el).map(i=>({i,k:nums(i.dataset.k),pan:i.dataset.pan?nums(i.dataset.pan):null})),
 ro:$$("[data-ro]",el).map(r=>({r,band:nums(r.dataset.ro)})),
@@ -592,8 +603,8 @@ const actById=id=>acts.find(a=>a.el.id===id);
 const fmtC=(v,k)=>k==="comma"?fmt(v):String(Math.round(v));
 function activeIndex(a,p){const B=a.beats;let idx=-1;for(let i=0;i<B.length;i++)if(p>=B[i].band[0]&&p<=B[i].band[1])idx=i;if(idx<0)for(let i=0;i<B.length-1;i++)if(p>B[i].band[1]&&p<B[i+1].band[0]&&p-B[i].band[1]<.06)idx=i;return idx;}
 function render(act,p,now){
-let busy=false;const idx=activeIndex(act,p);
-act.beats.forEach((o,i)=>{const on=i===idx,past=!on&&p>=o.band[1];if(on&&!o.active)o.t0=now;o.active=on;o.past=past;o.b.classList.toggle("on",on);o.b.classList.toggle("past",past);if(on){o.rv=clamp((now-o.t0-80)/o.rev);if(o.rv<1)busy=true;}else o.rv=past?1:0;});
+let busy=false;const idx=activeIndex(act,p),open=act.first||act.el.classList.contains("xopen");
+act.beats.forEach((o,i)=>{const on=i===idx,past=!on&&p>=o.band[1],live=on&&open;if(live&&!o.live)o.t0=now;o.live=live;o.active=on;o.past=past;o.b.classList.toggle("on",on);o.b.classList.toggle("past",past);if(on){o.rv=live?clamp((now-o.t0-80)/o.rev):0;if(live&&o.rv<1)busy=true;}else o.rv=past?1:0;});
 act.counters.forEach(c=>{const k=c.reveal?c.beat.rv:norm(p,c.a,c.z),s=fmtC(lerp(c.f,c.t,easeOut(k)),c.k);if(s!==c.last){c.n.textContent=s;c.last=s;}});
 act.kb.forEach(({i,k,pan})=>{if(calm)return;const s=lerp(k[0],k[1],p);i.style.transform=pan?`translate3d(${lerp(pan[0],pan[1],p).toFixed(2)}%,0,0) scale(${Math.max(s,1.08).toFixed(4)})`:`scale(${s.toFixed(4)})`;});
 act.ro.forEach(({r,band})=>r.classList.toggle("ron",p>=band[0]&&p<=band[1]));
@@ -613,9 +624,9 @@ return`<svg viewBox="-180 -180 360 360" aria-hidden="true"><defs>${pinkTint(id+"
 /* A씨 장면: 동그라미 다섯 개가 다 찬 뒤 접시의 굴 하나가 천천히 분홍빛으로 물든다 */
 (()=>{const mini=$("#sixMini");if(!mini)return;mini.innerHTML=sixPlateSVG("sxI");const tint=mini.querySelector(".sx-tint"),glow=mini.querySelector(".sx-glow");let lk=-1;
 FX.intro=(p,el,act,now)=>{const B=act.beats[1];mini.classList.toggle("on",p>=.03);
-const k=B.active?smooth(clamp((now-B.t0-1750)/800)):(B.past?1:0);
+const k=B.live?smooth(clamp((now-B.t0-1750)/800)):(B.past?1:0);
 if(Math.abs(k-lk)>.001){lk=k;tint.setAttribute("opacity",(k*.9).toFixed(3));glow.setAttribute("opacity",(k*.8).toFixed(3));}
-return B.active&&k<1;};})();
+return B.live&&k<1;};})();
 /* 숫자: 막대 그래프(상한 12,000으로 '+29%' 표시를 그래프 안에 둔다)와 유행 달력 */
 (()=>{
 const D=[[2022,4673],[2023,5926],[2024,6766],[2025,8731]],W=520,B=222,T=26,MAX=12000,L=64,bw=64,gap=(W-L-20-bw*4)/3,X=i=>L+10+i*(bw+gap),HH=v=>(B-T)*v/MAX;
@@ -833,12 +844,16 @@ pr.setAttribute("x2",X(hr).toFixed(1));dot.setAttribute("cx",X(hr).toFixed(1));
 syms.forEach((s,i)=>s.classList.toggle("lit",s.classList.contains("dry")?p>.80:(p>.51&&hr>=12+i*1.5)));
 if(g1&&g2){const s=sky((tot%1440)/60),k=s.join("|");if(k!==skyK){skyK=k;g1.style.background=s[0];g1.style.opacity=s[1];g2.style.background=s[2];g2.style.opacity=s[3];}}};
 })();
-/* 흔한 오해: 장면이 다 뜬 뒤(p≈.23)부터 한 줄씩. 스크롤이 빨라도 줄 사이 최소 0.42초, 되돌아갈 땐 바로 지운다 */
-(()=>{const rows=$$("#myths .my"),GAP=420;let shown=0,lastStep=0;
+/* 흔한 오해: 장면이 다 뜬 뒤(p≈.155)부터 한 줄씩. 스크롤이 빨라도 줄 사이 최소 0.42초, 되돌아갈 땐 바로 지운다.
+   오해가 지워지는 동안(.17~.60) 레몬 쪽으로 천천히 다가가고, 비브리오균 대목으로 넘어가며(.62~.70) 갯벌 사진으로 바뀐 뒤 넓게 물러난다(~.86) */
+(()=>{const rows=$$("#myths .my"),GAP=420,lemon=$("#myth .myth-lemon"),shore=$("#myth .myth-shore"),li=lemon.querySelector("img"),si=shore.querySelector("img");let shown=0,lastStep=0;
 rows.forEach(r=>{const s=r.querySelector("s");if(s&&!s.querySelector("i"))s.innerHTML="<i>"+s.innerHTML+"</i>";});
-FX.myth=(p,el,act,now)=>{let want=0;rows.forEach((r,i)=>{if(p>.27+i*.065)want=i+1;});
+FX.myth=(p,el,act,now)=>{let want=0;rows.forEach((r,i)=>{if(p>.20+i*.083)want=i+1;});
 if(want<shown)shown=want;else if(want>shown&&now-lastStep>=GAP){shown++;lastStep=now;}
-rows.forEach((r,i)=>r.classList.toggle("on",i<shown));return shown!==want;};})();
+rows.forEach((r,i)=>r.classList.toggle("on",i<shown));
+const x=ease(norm(p,.62,.70));lemon.style.opacity=(1-x).toFixed(3);shore.style.opacity=x.toFixed(3);
+if(!calm){const ls=lerp(1,1.18,smooth(norm(p,.17,.60)))-.08*x,ss=lerp(1.24,1,easeOut(norm(p,.63,.86)));li.style.transform=`scale(${ls.toFixed(4)})`;si.style.transform=`scale(${ss.toFixed(4)})`;}
+return shown!==want;};})();
 /* 익히기: 다이얼식 온도계와 타이머 */
 (()=>{
 const act=actById("heat");
@@ -855,7 +870,7 @@ const k=c.o.rv,kt=easeOut(clamp(k/.45)),km=clamp((k-.35)/.65),T=c.T*kt;
 c.v.setAttribute("stroke-dashoffset",(1-T/250).toFixed(4));c.n.setAttribute("transform",`rotate(${(135+270*T/250).toFixed(2)})`);c.t.textContent=Math.round(T)+"℃";
 const s=Math.round(c.M*60*km);c.m.textContent=pad(Math.floor(s/60))+":"+pad(s%60);c.r.setAttribute("stroke-dashoffset",(1-km).toFixed(4));});};
 })();
-/* 껍데기째 끓이는 냄비 */
+/* 껍데기째 끓이는 냄비. 껍데기는 글이 나온 뒤(.24~)부터 하나씩 벌어진다 */
 (()=>{
 const svg=$("#potSvg"),R=srand(17),OY=[{x:300,y:452},{x:384,y:432},{x:468,y:458},{x:552,y:434},{x:636,y:456},{x:716,y:434}],CLOSED=3,ORDER=[0,4,2,5,1],blur=LITE?"":' filter="url(#sb)"';
 let h=`<defs>
@@ -889,14 +904,14 @@ const flames=$("#flames"),bubs=$("#pbubs"),steam=$("#psteam"),timer=$("#ptimer")
 FX.pot=(p,el,act)=>{
 const B=act.beats,k=norm(p,.02,.12);
 flames.setAttribute("opacity",(.3+.7*k).toFixed(2));bubs.setAttribute("opacity",norm(p,.06,.14).toFixed(2));steam.setAttribute("opacity",norm(p,.08,.18).toFixed(2));
-ORDER.forEach((i,j)=>{const o=ease(norm(p,.12+j*.04,.16+j*.04));tops[i].setAttribute("transform",`rotate(${(-48*o).toFixed(1)} -46 -4)`);});
+ORDER.forEach((i,j)=>{const o=ease(norm(p,.24+j*.03,.28+j*.03));tops[i].setAttribute("transform",`rotate(${(-48*o).toFixed(1)} -46 -4)`);});
 const ck=norm(p,.4,.66);meats.forEach((m,i)=>{if(i!==CLOSED)m.setAttribute("fill",mixHex("#D8CFC0","#D29A5C",ck));});
 const tm=5*ease(norm(p,.42,.62));tT.textContent="+"+Math.floor(tm)+":"+pad(Math.floor((tm%1)*60));
 timer.setAttribute("opacity",(norm(p,.38,.42)*(1-.6*norm(p,.68,.72))).toFixed(2));ring.setAttribute("opacity",norm(p,.7,.74).toFixed(2));
 stamp.classList.toggle("hit",B[2].active||B[2].past);};
 })();
-/* 주방 */
-(()=>{const items=$$("#chkList li");FX.kitchen=p=>items.forEach((li,j)=>li.classList.toggle("on",p>.12+j*.13));})();
+/* 주방: 장면이 다 뜬 뒤(p≈.16)부터 하나씩 체크 */
+(()=>{const items=$$("#chkList li");FX.kitchen=p=>items.forEach((li,j)=>li.classList.toggle("on",p>.20+j*.11));})();
 /* 익힌 굴: 사진 전환과 마지막 접시. 접시가 다 뜨면 시계 방향으로 240° 돌다 서서히 멈추고(움직임 줄이기면 돌지 않음),
    그사이 처음 물들었던 굴 하나가 흐려져 여섯 개가 똑같아진다(겉으로는 구별할 수 없다). 위로 되돌아가 접시가 사라지면 처음 자리로 돌아간다 */
 (()=>{
@@ -941,6 +956,7 @@ rail.style.transform=`scaleX(${clamp(scrollY/Math.max(1,document.documentElement
 chapMarks.forEach(m=>m.a.classList.toggle("past",scrollY+2>=m.top));
 if(busy)requestAnimationFrame(loop);else running=false;}
 const req=()=>{if(!running){running=true;lastT=performance.now();requestAnimationFrame(loop);}};
+window.__oyReq=req;/* 장면 겹침 스크립트가 '다 떴다(xopen)'를 바꿀 때 엔진을 깨운다 */
 addEventListener("scroll",req,{passive:true});addEventListener("resize",req);
 /* 기사 페이지 단일 스크롤 연동. 부모→여기: host·progress·requestHeight·shield·tap / 여기→부모: ack·height·wheel·touchstart·touchscroll·touchend·key·open·goto */
 (()=>{
@@ -986,7 +1002,8 @@ req();
 </script>
 <script>
 /* 장면 겹침: 다음 막은 --xb 동안 같은 자리에서 뜬다. 휠·터치 속도와 상관없이 전환이 부드럽게 따라오도록 보간한다.
-   data-xt="tide"는 물 차오르기 + 수면선. 사진이 다 뜬 뒤(xopen) 글이 나온다. 움직임 줄이기면 즉시 반영 */
+   data-xt="tide"는 물 차오르기 + 수면선. 사진이 다 뜬 뒤(xopen) 글이 나온다. 움직임 줄이기면 즉시 반영.
+   xopen이 바뀌면 엔진(__oyReq)을 깨워 카운트업·온도계 같은 연출이 그 순간부터 시작되게 한다 */
 (function(){
 var root=document.documentElement,main=document.querySelector('main');if(!main)return;
 var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -996,7 +1013,7 @@ var secs=acts.slice(1).map(function(s){var st=s.firstElementChild,t=calm?'':(s.d
 acts[0].classList.add('xon');root.classList.add('xf');
 var XB=1,raf=0,last=0;
 function measure(){XB=Math.max(1,probe.offsetHeight||innerHeight*.14);}
-function apply(x){var o=x.o;if(Math.abs(o-x.d)<.0005)return;x.d=o;x.s.classList.toggle('xopen',o>=.98);
+function apply(x){var o=x.o;if(Math.abs(o-x.d)<.0005)return;x.d=o;var op=o>=.98;if(op!==x.s.classList.contains('xopen')){x.s.classList.toggle('xopen',op);if(window.__oyReq)window.__oyReq();}
 if(x.t==='tide'){var c=o>=1?'none':'inset('+((1-o)*100).toFixed(2)+'% 0 0 0)';x.st.style.clipPath=c;x.st.style.webkitClipPath=c;x.st.style.opacity=o>0?'1':'0';if(x.e){if(o<=0||o>=1)x.e.style.opacity='0';else{x.e.style.opacity='1';x.e.style.top=((1-o)*x.st.clientHeight).toFixed(1)+'px';}}}
 else x.st.style.opacity=o.toFixed(4);}
 function target(x){var top=x.s.getBoundingClientRect().top;x.s.classList.toggle('xon',top<=1);x.g=top>0?0:Math.min(1,-top/XB);}
